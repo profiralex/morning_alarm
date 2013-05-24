@@ -5,10 +5,7 @@ import java.util.Calendar;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ExpandableListView;
+import android.widget.ListView;
 
 public class AlarmEditActivity extends Activity{
 	
@@ -35,7 +32,7 @@ public class AlarmEditActivity extends Activity{
         
         AlarmAdapter ad=new AlarmAdapter(this,R.layout.list_item_main,list);
         
-        ExpandableListView lv=(ExpandableListView)this.findViewById(R.id.expAlarmList);
+        ListView lv=(ListView)this.findViewById(R.id.alarm_edit_list);
         
         lv.setAdapter(ad);
 		

@@ -2,20 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
+    android:focusableInTouchMode="false"
     android:orientation="horizontal" >
-
+
     <ToggleButton
         android:id="@+id/alarm_tb"
         android:layout_width="wrap_content"
         android:layout_height="27dp"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:textOff="@string/emptyString"
         android:textOn="@string/emptyString" />
-
+
     <TextView
         android:id="@+id/alarm_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="0.92"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:padding="2dp"
         android:text="Large Text"
         android:textAppearance="?android:attr/textAppearanceLarge" />
@@ -24,6 +29,8 @@
         android:id="@+id/alarm_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
         android:src="@drawable/ic_launcher" />
 
 </LinearLayout>

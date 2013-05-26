@@ -21,7 +21,15 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".AlarmEditActivity"
+            android:name=".AlarmSettingsActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name=".AlarmFragmentsSettingsActivity"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name=".AlarmSettingsFragment"
             android:label="@string/title_activity_main" >
         </activity>
     </application>

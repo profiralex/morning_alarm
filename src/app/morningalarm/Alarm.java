@@ -3,14 +3,14 @@ package app.morningalarm;
 import java.util.Calendar;
 
 public class Alarm {
-	private int id;
+	private String id;
 	private Calendar c;
 	private String method;
 	private String sound;
 	private boolean dow[];
 	private boolean enabled;
 
-	public Alarm(int id,Calendar c, String sound, String method, boolean dow[],boolean enabled) {
+	public Alarm(String id,Calendar c, String sound, String method, boolean dow[],boolean enabled) {
 		this.id = id;
 		this.c = c;
 		this.sound = sound;
@@ -20,7 +20,7 @@ public class Alarm {
 	}
 	
 	public Alarm(){
-		this( 0 ,Calendar.getInstance(),"calm","simple",null,true);
+		this( "0" ,Calendar.getInstance(),"calm","simple",null,true);
 	}
 
 	public Calendar getC() {
@@ -63,11 +63,11 @@ public class Alarm {
 		this.enabled = enabled;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

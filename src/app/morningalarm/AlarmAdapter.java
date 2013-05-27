@@ -1,16 +1,17 @@
 package app.morningalarm;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import app.database.AlarmDbAdapter;
 
 public class AlarmAdapter extends ArrayAdapter<Alarm> {
 
@@ -30,25 +31,40 @@ public class AlarmAdapter extends ArrayAdapter<Alarm> {
                 v = vi.inflate(R.layout.list_item_main, null);
             }
             
-            Alarm li = alarms.get(position);
+            final Alarm li = alarms.get(position);
             if (li != null) {
                     ImageView iv= (ImageView) v.findViewById(R.id.alarm_iv);
                     TextView tv = (TextView) v.findViewById(R.id.alarm_tv);
                     ToggleButton tb=(ToggleButton) v.findViewById(R.id.alarm_tb);
+                    tb.setOnClickListener(new OnClickListener(){
+
+						public void onClick(View arg0) {
+							if(li.isEnabled() == Alarm.ALARM_ENABLED)
+								li.setEnabled(Alarm.ALARM_DISABLED);
+							else
+								li.setEnabled(Alarm.ALARM_ENABLED);
+							AlarmDbAdapter mDbHelper= new AlarmDbAdapter(AlarmAdapter.this.getContext());
+							mDbHelper.open();
+							mDbHelper.updateAlarm(li);
+						}
+                    	
+                    });
                     if (iv != null) {
-                    	if(li.getMethod().equals("simple"))
+                    	if(li.getWakeUpMode().equals("simple"))
                     		iv.setImageResource(R.drawable.ic_launcher);
-                    	if(li.getMethod().equals("logic"))
+                    	if(li.getWakeUpMode().equals("logic"))
                     		iv.setImageResource(R.drawable.ic_launcher);
-                    	if(li.getMethod().equals("scanner"))
+                    	if(li.getWakeUpMode().equals("scanner"))
                     		iv.setImageResource(R.drawable.ic_launcher);
                     }
                     if(tv != null){
-                    	  SimpleDateFormat df=new SimpleDateFormat("kk:mm");
-                          tv.setText(df.format(li.getC().getTime()));
+                          tv.setText(li.getTime());
                     }
                     if(tb!=null){
-                    	tb.setChecked(li.isEnabled());
+                    	if(li.isEnabled() == Alarm.ALARM_ENABLED)
+                    		tb.setChecked(true);
+                    	else
+                    		tb.setChecked(false);
                     }
             }
             

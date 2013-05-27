@@ -1,5 +1,9 @@
 package app.morningalarm;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 import android.content.Context;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
@@ -28,7 +32,10 @@ public class TimePreference extends DialogPreference {
 	protected View onCreateDialogView() {
 	    this.tp = new TimePicker(getContext());
 	    this.tp.setIs24HourView(true);
-	    final String storedValue = getPersistedString("07:00");
+	    Calendar c = Calendar.getInstance();
+	    DateFormat df=DateFormat.getTimeInstance(DateFormat.SHORT);
+		String time=df.format(c.getTime());
+	    final String storedValue = getPersistedString(time);
 	    final String[] split = storedValue.split(":");
 	    this.tp.setCurrentHour(Integer.parseInt(split[0]));
 	    this.tp.setCurrentMinute(Integer.parseInt(split[1]));

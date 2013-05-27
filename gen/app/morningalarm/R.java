@@ -45,9 +45,10 @@ containing a value of this type.
         public static final int alarm_iv=0x7f090007;
         public static final int alarm_tb=0x7f090005;
         public static final int alarm_tv=0x7f090006;
+        public static final int delete_option=0x7f090009;
+        public static final int id_empty_list_text_view=0x7f090004;
         public static final int listView1=0x7f090003;
         public static final int menu_settings=0x7f090008;
-        public static final int textView1=0x7f090004;
     }
     public static final class layout {
         public static final int activity_edit=0x7f030000;
@@ -57,10 +58,13 @@ containing a value of this type.
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;
+        public static final int context_menu=0x7f080001;
     }
     public static final class string {
         public static final int app_name=0x7f050000;
         public static final int day_of_week_title=0x7f050007;
+        public static final int def_value_description=0x7f05000d;
+        public static final int delete_option_string=0x7f05000e;
         public static final int description_title=0x7f050005;
         public static final int discard_button_title=0x7f05000b;
         public static final int duration_title=0x7f050008;

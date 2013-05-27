@@ -14,26 +14,9 @@ import android.preference.ListPreference;
 import android.util.AttributeSet;
 import android.widget.ListView;
 
-/**
- * 
- * @author declanshanaghy
- * http://blog.350nice.com/wp/archives/240
- * MultiChoice Preference Widget for Android
- *
- * @contributor matiboy
- * Added support for check all/none and custom separator defined in XML.
- * IMPORTANT: The following attributes MUST be defined (probably inside attr.xml) for the code to even compile
- * <declare-styleable name="ListPreferenceMultiSelect">
-    	<attr format="string" name="checkAll" />
-    	<attr format="string" name="separator" />
-    </declare-styleable>
- *  Whether you decide to then use those attributes is up to you.
- *
- */
 public class ListPreferenceMultiSelect extends ListPreference {
 	private String separator;
 	private static final String DEFAULT_SEPARATOR = "OV=I=XseparatorX=I=VO"; 
-	private static final String LOG_TAG = "ListPreferenceMultiSelect";
 	private String checkAllKey = null;
 	private boolean[] mClickedDialogEntryIndices;
 	
@@ -113,14 +96,10 @@ public class ListPreferenceMultiSelect extends ListPreference {
     private void restoreCheckedEntries() {
     	CharSequence[] entryValues = getEntryValues();
     	
-    	// Explode the string read in sharedpreferences
     	String[] vals = parseStoredValue(getValue());
     	
     	if ( vals != null ) {
     		List<String> valuesList = Arrays.asList(vals);
-//        	for ( int j=0; j<vals.length; j++ ) {
-//    		TODO: Check why the trimming... Can there be some random spaces added somehow? What if we want a value with trailing spaces, is that an issue?
-//        		String val = vals[j].trim();
         	for ( int i=0; i<entryValues.length; i++ ) {
         		CharSequence entry = entryValues[i];
             	if ( valuesList.contains(entry) ) {
@@ -153,7 +132,6 @@ public class ListPreferenceMultiSelect extends ListPreference {
         }
     }
 	
-	// Credits to kurellajunior on this post http://snippets.dzone.com/posts/show/91
 	protected static String join( Iterable< ? extends Object > pColl, String separator )
     {
         Iterator< ? extends Object > oIter;

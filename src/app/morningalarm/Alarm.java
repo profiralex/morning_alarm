@@ -1,65 +1,67 @@
 package app.morningalarm;
 
-import java.util.Calendar;
-
 public class Alarm {
-	private String id;
-	private Calendar c;
-	private String method;
-	private String sound;
-	private boolean dow[];
-	private boolean enabled;
-
-	public Alarm(String id,Calendar c, String sound, String method, boolean dow[],boolean enabled) {
-		this.id = id;
-		this.c = c;
-		this.sound = sound;
-		this.method = method;
-		this.dow=dow;
-		this.enabled=enabled;
-	}
 	
-	public Alarm(){
-		this( "0" ,Calendar.getInstance(),"calm","simple",null,true);
+	public static final int 	ALARM_ENABLED = 1;
+	public static final int 	ALARM_DISABLED = 0;
+	
+	private String id;
+	private int    enabled;
+	private String description;
+	private String time;
+	private String daysOfWeek;
+	private String duration;
+	private String wakeUpMode;
+	private String ringtone;
+
+	public Alarm(String id, int enabled, String description, String time,String daysOfWeek, String duration, String wakeUpMode, String ringtone) {
+		this.id = id;
+		this.enabled=enabled;
+		this.description = description;
+		this.time = time;
+		this.daysOfWeek=daysOfWeek;
+		this.duration = duration;
+		this.wakeUpMode = wakeUpMode;
+		this.ringtone = ringtone;
 	}
 
-	public Calendar getC() {
-		return c;
+	public String getTime() {
+		return time;
 	}
 
-	public void setC(Calendar c) {
-		this.c = c;
+	public void setTime(String time) {
+		this.time = time;
 	}
 
-	public String getMethod() {
-		return method;
+	public String getWakeUpMode() {
+		return wakeUpMode;
 	}
 
-	public void setMethod(String method) {
-		this.method = method;
+	public void setWakeUpMode(String wakeUpMode) {
+		this.wakeUpMode = wakeUpMode;
 	}
 
-	public String getSound() {
-		return sound;
+	public String getRingtone() {
+		return ringtone;
 	}
 
-	public void setSound(String sound) {
-		this.sound = sound;
+	public void setRingtone(String ringtone) {
+		this.ringtone = ringtone;
 	}
 
-	public boolean[] getDow() {
-		return dow;
+	public String getDaysOfWeek() {
+		return daysOfWeek;
 	}
 
-	public void setDow(boolean[] dow) {
-		this.dow = dow;
+	public void setDaysOfWeek(String daysOfWeek) {
+		this.daysOfWeek = daysOfWeek;
 	}
 
-	public boolean isEnabled() {
+	public int isEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(boolean enabled) {
+	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
 
@@ -70,8 +72,38 @@ public class Alarm {
 	public void setId(String id) {
 		this.id = id;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getDuration() {
+		return duration;
+	}
+
+	public void setDuration(String duration) {
+		this.duration = duration;
+	}
 	
-	
+	public static String convertArrayToString(String[] array){
+	    String str = "";
+	    for (int i = 0;i<array.length; i++) {
+	        str = str+array[i];
+	        // Do not append comma at the end of last element
+	        if(i<array.length-1){
+	            str = str+",";
+	        }
+	    }
+	    return str;
+	}
+	public static String[] convertStringToArray(String str){
+	    String[] arr = str.split(",");
+	    return arr;
+	}
 
 	
 }

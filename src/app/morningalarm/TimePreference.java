@@ -1,7 +1,6 @@
 package app.morningalarm;
 
 import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import android.content.Context;

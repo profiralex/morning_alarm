@@ -1,6 +1,5 @@
 package app.morningalarm;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -22,6 +21,7 @@ import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
+import app.alarmmanager.AlarmSetter;
 import app.database.AlarmDbAdapter;
 import app.database.AlarmDbUtilities;
 
@@ -31,7 +31,7 @@ public class AlarmListActivity extends Activity {
 	private ArrayList<Alarm> list;
 	private String lastId;
 	private int lastIndex;
-	private AlarmAdapter ad;
+	private AlarmListAdapter ad;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +63,7 @@ public class AlarmListActivity extends Activity {
         	
         });
         
-        ad=new AlarmAdapter(this,R.layout.list_item_main,list);
+        ad=new AlarmListAdapter(this,R.layout.list_item_main,list);
         ListView lv=(ListView)this.findViewById(R.id.listView1);
         lv.setAdapter(ad);
         lv.setOnItemClickListener(new OnItemClickListener(){
@@ -122,7 +122,6 @@ public class AlarmListActivity extends Activity {
     	super.onActivityResult(requestCode, resultCode, data);
     	SharedPreferences sp= this.getSharedPreferences(lastId, Context.MODE_PRIVATE);
     	
-		//Integer enabled = Integer.parseInt(c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_ENABLED)));
 		String description = sp.getString("description", null);
 		String time = sp.getString("time", null);
 		String duration = sp.getString("duration", null);
@@ -130,13 +129,24 @@ public class AlarmListActivity extends Activity {
 		String wakeUpMode = sp.getString("wake_up_mode", null);
 		String ringtone = sp.getString("ringtone", null);
 		Alarm alarm = list.get(lastIndex);
-		if(time == null){
-			Calendar c = Calendar.getInstance();
-			DateFormat df=DateFormat.getTimeInstance(DateFormat.SHORT);
-			time=df.format(c.getTime());
+		Calendar now = Calendar.getInstance();
+		Calendar when = Calendar.getInstance();
+		when.set(Calendar.SECOND,0);
+		now.set(Calendar.SECOND,1);
+		
+		if(time != null){
+			String timeArgs[] =time.split(":");
+			when.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArgs[0]));
+			when.set(Calendar.MINUTE, Integer.parseInt(timeArgs[1]));
 		}
+		
+		Long setDayAfter = 0L;
+		if(when.before(now)){
+			setDayAfter = 86400000L;
+		}
+		
 		alarm.setDescription(description);
-		alarm.setTime(time);
+		alarm.setTime((when.getTimeInMillis()+ setDayAfter) + "");
 		alarm.setDuration(duration);
 		alarm.setWakeUpMode(wakeUpMode);
 		alarm.setDaysOfWeek(daysOfWeek);
@@ -144,5 +154,8 @@ public class AlarmListActivity extends Activity {
 		this.mDbHelper.updateAlarm(alarm);
 		emptyTextViewVisibility();
 		ad.notifyDataSetChanged();
+		AlarmSetter as= new AlarmSetter(this);
+		as.setAlarm(alarm);
+		
     }
 }

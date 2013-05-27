@@ -19,7 +19,6 @@
             android:label="@string/title_activity_main" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -35,6 +34,13 @@
             android:name=".AlarmSettingsFragment"
             android:label="@string/title_activity_main" >
         </activity>
-    </application>
-
+        <receiver android:name="app.alarmmanager.OnBootReceiver">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/>
+            </intent-filter>
+        </receiver>
+        <receiver android:name="app.alarmmanager.OnAlarmReceiver">
+        </receiver>
+        <service android:name="app.alarmmanager.AlarmService"/>   
+	</application>
 </manifest>

@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.database.Cursor;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -16,6 +15,7 @@ import android.view.ContextMenu.ContextMenuInfo;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -27,59 +27,57 @@ import app.database.AlarmDbUtilities;
 
 public class AlarmListActivity extends Activity {
 	
-	private AlarmDbAdapter mDbHelper;
-	private ArrayList<Alarm> list;
+	private ArrayList<Alarm> alarmList;
 	private String lastId;
 	private int lastIndex;
 	private AlarmListAdapter ad;
+	
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mDbHelper = new AlarmDbAdapter(this);
-        mDbHelper.open();
-        list = AlarmDbUtilities.fetchCursor(mDbHelper.fetchAllAlarms());
-        
+        alarmList = AlarmDbUtilities.fetchAllAlarms(this);
         Button b = (Button)this.findViewById(R.id.add_btn);
         b.setOnClickListener(new OnClickListener(){
 
 			public void onClick(View arg0) {
-				mDbHelper.createAlarm();
-				Cursor cur = mDbHelper.fetchNewAlarm();
-				ArrayList<Alarm> newAlarm = AlarmDbUtilities.fetchCursor(cur);
-				lastIndex = list.size();
-				list.add(newAlarm.get(0));
+				Alarm newAlarm = AlarmDbUtilities.fetchNewAlarm(AlarmListActivity.this);
+				lastIndex = alarmList.size();
+				alarmList.add(newAlarm);
 				Intent i;
 				if (Build.VERSION.SDK_INT < 11) {
 				    i = new Intent(AlarmListActivity.this, AlarmSettingsActivity.class);
 				} else {
 					i= new Intent(AlarmListActivity.this, AlarmFragmentsSettingsActivity.class);
 				}
-				i.putExtra(AlarmDbAdapter.KEY_ID, newAlarm.get(0).getId());
-				lastId = newAlarm.get(0).getId();
+				i.putExtra(AlarmDbAdapter.KEY_ID, newAlarm.getId());
+				lastId = newAlarm.getId();
 				AlarmListActivity.this.startActivityForResult(i,0);
 				
 			}
         	
         });
         
-        ad=new AlarmListAdapter(this,R.layout.list_item_main,list);
+        ad=new AlarmListAdapter(this,R.layout.list_item_main,alarmList);
         ListView lv=(ListView)this.findViewById(R.id.listView1);
         lv.setAdapter(ad);
+        
+        
         lv.setOnItemClickListener(new OnItemClickListener(){
         
 			@SuppressLint("NewApi")
-			public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,
-					long arg3) {
+			public void onItemClick(AdapterView<?> adapter, View view, int arg,
+					long position) {
+				int pos = (int) position;
 				Intent i;
 				if (Build.VERSION.SDK_INT < 11) {
 				    i = new Intent(AlarmListActivity.this, AlarmSettingsActivity.class);
 				} else {
 					i= new Intent(AlarmListActivity.this, AlarmFragmentsSettingsActivity.class);
 				}
-				i.putExtra("id", list.get((int)arg3).getId());
-				lastId = list.get((int)arg3).getId();
-				lastIndex = (int)arg3;
+				i.putExtra("id", alarmList.get(pos).getId());
+				lastId = alarmList.get(pos).getId();
+				lastIndex = pos;
 				AlarmListActivity.this.startActivityForResult(i,0);
 			}
         });
@@ -89,7 +87,7 @@ public class AlarmListActivity extends Activity {
     }
     
     private void emptyTextViewVisibility(){
-    	if(list.size()>0)
+    	if(alarmList.size()>0)
         	findViewById(R.id.id_empty_list_text_view).setVisibility(View.GONE);
     	else
     		findViewById(R.id.id_empty_list_text_view).setVisibility(View.VISIBLE);
@@ -107,9 +105,9 @@ public class AlarmListActivity extends Activity {
     	switch(item.getItemId()){
     		case R.id.delete_option:
     			AdapterContextMenuInfo info = (AdapterContextMenuInfo) item.getMenuInfo();
-    			Alarm a = list.get((int)info.id);
-    			mDbHelper.deleteAlarm(a);
-    			list.remove(a);
+    			Alarm alarm = alarmList.get((int)info.id);
+    			AlarmDbUtilities.deleteAlarm(this, alarm);
+    			alarmList.remove(alarm);
     			emptyTextViewVisibility();
     			ad.notifyDataSetChanged();
     			break;
@@ -128,7 +126,7 @@ public class AlarmListActivity extends Activity {
 		String daysOfWeek = sp.getString("days_of_week", null);
 		String wakeUpMode = sp.getString("wake_up_mode", null);
 		String ringtone = sp.getString("ringtone", null);
-		Alarm alarm = list.get(lastIndex);
+		Alarm alarm = alarmList.get(lastIndex);
 		Calendar now = Calendar.getInstance();
 		Calendar when = Calendar.getInstance();
 		when.set(Calendar.SECOND,0);
@@ -151,11 +149,11 @@ public class AlarmListActivity extends Activity {
 		alarm.setWakeUpMode(wakeUpMode);
 		alarm.setDaysOfWeek(daysOfWeek);
 		alarm.setRingtone(ringtone);
-		this.mDbHelper.updateAlarm(alarm);
+		AlarmDbUtilities.updateAlarm(this, alarm);
 		emptyTextViewVisibility();
 		ad.notifyDataSetChanged();
-		AlarmSetter as= new AlarmSetter(this);
-		as.setAlarm(alarm);
+		AlarmSetter aSetter= new AlarmSetter(this);
+		aSetter.setAlarm(alarm);
 		
     }
 }

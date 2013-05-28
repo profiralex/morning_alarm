@@ -10,7 +10,13 @@ public class OnBootReceiver extends BroadcastReceiver{
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Toast.makeText(context,"boot alarm", Toast.LENGTH_LONG).show();
+		Toast.makeText(context,"alarm boot got in receiver", Toast.LENGTH_SHORT).show();
+		Log.d("DEBUG_TAG", "alarm boot got in receiver");
+		
+		WakeAlarmIntentService.acquireStaticLock(context);
+		
+		Intent i = new Intent(context, AlarmRefreshingService.class);
+		context.startService(i);
 	}
 
 }

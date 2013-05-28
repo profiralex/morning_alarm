@@ -40,21 +40,19 @@ containing a value of this type.
     }
     public static final class id {
         public static final int LinearLayout1=0x7f090000;
-        public static final int add_btn=0x7f090002;
-        public static final int alarm_edit_list=0x7f090001;
+        public static final int add_btn=0x7f090001;
         public static final int alarm_iv=0x7f090007;
-        public static final int alarm_tb=0x7f090005;
-        public static final int alarm_tv=0x7f090006;
+        public static final int alarm_tb=0x7f090004;
+        public static final int alarm_tv_big=0x7f090005;
+        public static final int alarm_tv_small=0x7f090006;
         public static final int delete_option=0x7f090009;
-        public static final int id_empty_list_text_view=0x7f090004;
-        public static final int listView1=0x7f090003;
+        public static final int id_empty_list_text_view=0x7f090003;
+        public static final int listView1=0x7f090002;
         public static final int menu_settings=0x7f090008;
     }
     public static final class layout {
-        public static final int activity_edit=0x7f030000;
-        public static final int activity_main=0x7f030001;
-        public static final int list_item_edit1=0x7f030002;
-        public static final int list_item_main=0x7f030003;
+        public static final int activity_main=0x7f030000;
+        public static final int list_item_main=0x7f030001;
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;

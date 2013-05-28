@@ -80,7 +80,7 @@ public class AlarmDbAdapter {
 				KEY_RINGTONE}, null, null, null,null,KEY_TIME);
 	}
 	
-	public Cursor fetchAlarm(long rowId) throws SQLException{
+	public Cursor fetchAlarm(String rowId) throws SQLException{
 		Cursor mCursor = mDb.query(true, DATABASE_TABLE,new String [] {KEY_ID,  KEY_ENABLED, KEY_DESCRIPTION,
 				KEY_TIME, KEY_DAYS_OF_WEEK, KEY_DURATION, KEY_WAKE_UP_MODE,
 				KEY_RINGTONE} , KEY_ID + "=" + rowId , null, null, null, null,null);

@@ -36,7 +36,8 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm> {
             final Alarm li = alarms.get(position);
             if (li != null) {
                     ImageView iv= (ImageView) v.findViewById(R.id.alarm_iv);
-                    TextView tv = (TextView) v.findViewById(R.id.alarm_tv);
+                    TextView tv_big = (TextView) v.findViewById(R.id.alarm_tv_big);
+                    TextView tv_small = (TextView) v.findViewById(R.id.alarm_tv_small);
                     ToggleButton tb=(ToggleButton) v.findViewById(R.id.alarm_tb);
                     tb.setOnClickListener(new OnClickListener(){
 
@@ -59,12 +60,16 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm> {
                     	if(li.getWakeUpMode().equals("scanner"))
                     		iv.setImageResource(R.drawable.ic_launcher);
                     }
-                    if(tv != null){
+                    if(tv_big != null){
                     	Calendar c = Calendar.getInstance();
                     	c.setTimeInMillis(Long.parseLong(li.getTime()));
                     	DateFormat df=DateFormat.getTimeInstance(DateFormat.SHORT);
                 		String time=df.format(c.getTime());
-                        tv.setText(time);
+                        tv_big.setText(time);
+                    }
+                    
+                    if(tv_small != null){
+                        tv_small.setText(li.getDescription());
                     }
                     if(tb!=null){
                     	if(li.isEnabled() == Alarm.ALARM_ENABLED)

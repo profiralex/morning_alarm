@@ -45,14 +45,19 @@ containing a value of this type.
         public static final int alarm_tb=0x7f090004;
         public static final int alarm_tv_big=0x7f090005;
         public static final int alarm_tv_small=0x7f090006;
-        public static final int delete_option=0x7f090009;
+        public static final int delete_option=0x7f09000d;
         public static final int id_empty_list_text_view=0x7f090003;
         public static final int listView1=0x7f090002;
-        public static final int menu_settings=0x7f090008;
+        public static final int math_test_answer=0x7f09000a;
+        public static final int math_test_button=0x7f09000b;
+        public static final int math_test_task=0x7f090009;
+        public static final int menu_settings=0x7f09000c;
+        public static final int textView1=0x7f090008;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
         public static final int list_item_main=0x7f030001;
+        public static final int math_test_layout=0x7f030002;
     }
     public static final class menu {
         public static final int activity_main=0x7f080000;
@@ -67,12 +72,14 @@ containing a value of this type.
         public static final int discard_button_title=0x7f05000b;
         public static final int duration_title=0x7f050008;
         public static final int emptyString=0x7f050003;
+        public static final int math_test_solved=0x7f050010;
         public static final int menu_settings=0x7f050001;
         public static final int preferences_title=0x7f050004;
         public static final int ring_tone_title=0x7f05000c;
         public static final int save_button_title=0x7f05000a;
         public static final int time_title=0x7f050006;
         public static final int title_activity_main=0x7f050002;
+        public static final int title_for_math_test_view=0x7f05000f;
         public static final int wake_up_mode_title=0x7f050009;
     }
     public static final class style {

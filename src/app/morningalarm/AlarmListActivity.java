@@ -8,6 +8,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -36,6 +37,7 @@ public class AlarmListActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
         alarmList = AlarmDbUtilities.fetchAllAlarms(this);
         Button b = (Button)this.findViewById(R.id.add_btn);
         b.setOnClickListener(new OnClickListener(){

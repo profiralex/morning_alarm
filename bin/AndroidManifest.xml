@@ -37,6 +37,10 @@
             android:name=".AlarmSettingsFragment"
             android:label="@string/title_activity_main" >
         </activity>
+        <activity
+            android:name="app.tasks.MathAlarmTask"
+            android:label="@string/title_activity_main" >
+        </activity>
         <receiver android:name="app.alarmmanager.OnBootReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED"/>

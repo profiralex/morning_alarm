@@ -22,7 +22,7 @@ public class AlarmSetter {
 
 	private Context mContext;
 	private AlarmManager mAlarmManager;
-	
+	private static final long FIVE_MINUTES = 300000L;
 	public AlarmSetter(Context context){
 		mContext = context;
 		mAlarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
@@ -35,11 +35,25 @@ public class AlarmSetter {
 		}
 	}
 	
-	public void setAlarm(Alarm alarm){
+	/*public void setAlarm(Alarm alarm){
 		Intent i = new Intent (mContext, OnAlarmReceiver.class);
 		i.putExtra(AlarmDbAdapter.KEY_ID, alarm.getId());
 		PendingIntent pi = PendingIntent.getBroadcast(mContext,Integer.parseInt(alarm.getId()), i, PendingIntent.FLAG_ONE_SHOT);
 		mAlarmManager.set(AlarmManager.RTC_WAKEUP, Long.parseLong(alarm.getTime()), pi);
+		//log
+		Calendar c = Calendar.getInstance();
+    	c.setTimeInMillis(Long.parseLong(alarm.getTime()));
+    	DateFormat df=DateFormat.getTimeInstance(DateFormat.SHORT);
+		String time=df.format(c.getTime());
+		
+		Log.d("DEBUG_TAG", "alarm setted on "+ time);
+	}*/
+	
+	public void setAlarm(Alarm alarm){
+		Intent i = new Intent (mContext, OnAlarmReceiver.class);
+		i.putExtra(AlarmDbAdapter.KEY_ID, alarm.getId());
+		PendingIntent pi = PendingIntent.getBroadcast(mContext,Integer.parseInt(alarm.getId()), i, PendingIntent.FLAG_UPDATE_CURRENT);
+		mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Long.parseLong(alarm.getTime()), FIVE_MINUTES, pi);
 		//log
 		Calendar c = Calendar.getInstance();
     	c.setTimeInMillis(Long.parseLong(alarm.getTime()));

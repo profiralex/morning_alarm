@@ -2,17 +2,15 @@ package app.alarmmanager;
 
 import java.util.Calendar;
 
-import android.content.Context;
 import android.content.Intent;
-import android.media.Ringtone;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Vibrator;
 import android.util.Log;
 import android.widget.Toast;
 import app.database.AlarmDbAdapter;
 import app.database.AlarmDbUtilities;
 import app.morningalarm.Alarm;
+import app.morningalarm.R;
+import app.tasks.AlarmTask;
+import app.tasks.MathAlarmTask;
 
 public class AlarmService extends WakeAlarmIntentService{
 	public AlarmService(){
@@ -26,27 +24,20 @@ public class AlarmService extends WakeAlarmIntentService{
 		
 		String alarmId = intent.getExtras().getString(AlarmDbAdapter.KEY_ID);
 		Alarm alarm = AlarmDbUtilities.fetchAlarm(this, alarmId);
-		if(alarm != null && alarm.isEnabled() == Alarm.ALARM_ENABLED){
+		if(alarm != null && alarm.isEnabled() == Alarm.ALARM_ENABLED){		
 			
-			Calendar when = Calendar.getInstance();
-			when.setTimeInMillis(Long.parseLong(alarm.getTime()));
-			when.add(Calendar.DAY_OF_YEAR, 1);
-			alarm.setTime(when.getTimeInMillis()+"");
+			MathAlarmTask.setAlarm(alarm);
 			
-			AlarmDbUtilities.updateAlarm(this, alarm);
-			AlarmSetter aSetter = new AlarmSetter(this);
-			aSetter.setAlarm(alarm);
+			Intent task = new Intent(this, MathAlarmTask.class);
+			task.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(task);
 			
-			Uri alarmSound = Uri.parse(alarm.getRingtone());
-			//Ringtone r = RingtoneManager.getRingtone(getApplicationContext(), alarmSound);
-			//r.play();
-			Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-			v.vibrate(5000);
-			
-			Log.d("DEBUG_TAG", "alarm is not null");
+			Log.d("DEBUG_TAG", "activity must start");
+		}else{
+			Log.d("DEBUG_TAG", "alarm is null");
 		}
 		
-		Log.d("DEBUG_TAG", "alarm is null");
+		
 	}
 
 }

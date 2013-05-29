@@ -63,5 +63,7 @@
     <string name="ring_tone_title">Ringtone</string>
     <string name="def_value_description">New alarm</string>
     <string name="delete_option_string">Delete alarm</string>
+    <string name="title_for_math_test_view">Please write the right answer</string>
+    <string name="math_test_solved">Solved</string>
 
 </resources>

@@ -1,6 +1,8 @@
 package app.alarmmanager;
 
 import android.app.IntentService;
+import android.app.KeyguardManager;
+import android.app.KeyguardManager.KeyguardLock;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
@@ -18,7 +20,7 @@ public abstract class WakeAlarmIntentService extends IntentService{
 	synchronized private static PowerManager.WakeLock getLock(Context context){
 		if(lockStatic == null){
 			PowerManager mgr = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
-			lockStatic = mgr.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, LOCK_NAME_STATIC);
+			lockStatic = mgr.newWakeLock(PowerManager.FULL_WAKE_LOCK|PowerManager.ACQUIRE_CAUSES_WAKEUP, LOCK_NAME_STATIC);
 			lockStatic.setReferenceCounted(true);
 		}
 		return lockStatic;

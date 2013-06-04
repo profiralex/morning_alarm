@@ -11,10 +11,8 @@ public class OnAlarmReceiver extends BroadcastReceiver{
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Toast.makeText(context,"alarm got in receiver", Toast.LENGTH_SHORT).show();
-		Log.d("DEBUG_TAG", "alarm got in receiver");
-		
 		String alarmId = intent.getExtras().getString(AlarmDbAdapter.KEY_ID);
+		Log.d("DEBUG_TAG", "alarm got in receiver "+ alarmId);
 		WakeAlarmIntentService.acquireStaticLock(context);
 		
 		Intent i = new Intent(context, AlarmService.class);

@@ -1,5 +1,6 @@
 package app.morningalarm;
 
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -11,12 +12,13 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnLongClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
@@ -38,6 +40,7 @@ public class AlarmListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
+        //AlarmDbUtilities.deleteAll(this);
         alarmList = AlarmDbUtilities.fetchAllAlarms(this);
         Button b = (Button)this.findViewById(R.id.add_btn);
         b.setOnClickListener(new OnClickListener(){
@@ -96,6 +99,27 @@ public class AlarmListActivity extends Activity {
     }
     
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+    	super.onCreateOptionsMenu(menu);
+        getMenuInflater().inflate(R.menu.delete_menu, menu);
+        return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+    	super.onOptionsItemSelected(item);
+    	switch(item.getItemId()){
+    		case R.id.menu_delete_all_option: 
+    			AlarmDbUtilities.deleteAll(this);
+    			alarmList.removeAll(alarmList);
+    			emptyTextViewVisibility();
+    			ad.notifyDataSetChanged();
+    			break;
+    	}
+    	return true;
+    }
+    
+    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     	super.onCreateContextMenu(menu, v, menuInfo);
         getMenuInflater().inflate(R.menu.context_menu, menu);
@@ -128,34 +152,30 @@ public class AlarmListActivity extends Activity {
 		String daysOfWeek = sp.getString("days_of_week", null);
 		String wakeUpMode = sp.getString("wake_up_mode", null);
 		String ringtone = sp.getString("ringtone", null);
+		
 		Alarm alarm = alarmList.get(lastIndex);
-		Calendar now = Calendar.getInstance();
 		Calendar when = Calendar.getInstance();
 		when.set(Calendar.SECOND,0);
-		now.set(Calendar.SECOND,1);
-		
 		if(time != null){
 			String timeArgs[] =time.split(":");
 			when.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeArgs[0]));
 			when.set(Calendar.MINUTE, Integer.parseInt(timeArgs[1]));
 		}
-		
-		Long setDayAfter = 0L;
-		if(when.before(now)){
-			setDayAfter = 86400000L;
-		}
-		
+    	DateFormat df=DateFormat.getDateTimeInstance();
+		Log.d("DEBUG_TAG", "din preferinte a iesit cu :"+ df.format(when.getTime()));
 		alarm.setDescription(description);
-		alarm.setTime((when.getTimeInMillis()+ setDayAfter) + "");
+		alarm.setTime(when.getTimeInMillis() + "");
 		alarm.setDuration(duration);
 		alarm.setWakeUpMode(wakeUpMode);
 		alarm.setDaysOfWeek(daysOfWeek);
 		alarm.setRingtone(ringtone);
-		AlarmDbUtilities.updateAlarm(this, alarm);
-		emptyTextViewVisibility();
-		ad.notifyDataSetChanged();
-		AlarmSetter aSetter= new AlarmSetter(this);
-		aSetter.setAlarm(alarm);
+		if(alarm.isEnabled() == Alarm.ALARM_ENABLED){
+			AlarmSetter  aSetter = new AlarmSetter(this);
+			aSetter.setAlarm(alarm);
+		}
 		
+		AlarmDbUtilities.updateAlarm(this, alarm);
+		ad.notifyDataSetChanged();
+		emptyTextViewVisibility();
     }
 }

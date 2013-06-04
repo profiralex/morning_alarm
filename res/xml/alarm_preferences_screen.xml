@@ -4,10 +4,10 @@
         android:key="description" 
         android:title="@string/description_title" 
         android:defaultValue="@string/def_value_description"/>
-    <app.morningalarm.TimePreference 
+    <app.morningalarm.preferences.TimePreference 
         android:key="time" 
         android:title="@string/time_title"/> 
-    <app.morningalarm.ListPreferenceMultiSelect
+    <app.morningalarm.preferences.ListPreferenceMultiSelect
     	android:key="days_of_week"
     	android:title="@string/day_of_week_title" 
     	android:dialogTitle="@string/day_of_week_title" 

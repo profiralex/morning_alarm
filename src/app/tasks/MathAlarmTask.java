@@ -4,6 +4,7 @@ import java.util.Random;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -20,6 +21,9 @@ public class MathAlarmTask extends AlarmTask {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 		
 	}
 

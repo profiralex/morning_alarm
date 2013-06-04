@@ -13,7 +13,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
+import app.alarmmanager.AlarmSetter;
 import app.database.AlarmDbAdapter;
+import app.database.AlarmDbUtilities;
 
 public class AlarmListAdapter extends ArrayAdapter<Alarm> {
 
@@ -42,13 +44,15 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm> {
                     tb.setOnClickListener(new OnClickListener(){
 
 						public void onClick(View arg0) {
-							if(li.isEnabled() == Alarm.ALARM_ENABLED)
+							AlarmSetter aSetter = new AlarmSetter(AlarmListAdapter.this.getContext());
+							if(li.isEnabled() == Alarm.ALARM_ENABLED){
 								li.setEnabled(Alarm.ALARM_DISABLED);
-							else
+								aSetter.removeAlarm(li.getId());
+							}
+							else{
 								li.setEnabled(Alarm.ALARM_ENABLED);
-							AlarmDbAdapter mDbHelper= new AlarmDbAdapter(AlarmListAdapter.this.getContext());
-							mDbHelper.open();
-							mDbHelper.updateAlarm(li);
+								aSetter.setAlarm(li);
+							}
 						}
                     	
                     });

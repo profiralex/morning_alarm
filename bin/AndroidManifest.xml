@@ -34,11 +34,19 @@
             android:label="@string/title_activity_main" >
         </activity>
         <activity
-            android:name=".AlarmSettingsFragment"
+            android:name="app.morningalarm.preferences.AlarmSettingsFragment"
             android:label="@string/title_activity_main" >
         </activity>
         <activity
             android:name="app.tasks.MathAlarmTask"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name="app.tasks.SimpleAlarmTask"
+            android:label="@string/title_activity_main" >
+        </activity>
+        <activity
+            android:name="app.tasks.LogicAlarmTask"
             android:label="@string/title_activity_main" >
         </activity>
         <receiver android:name="app.alarmmanager.OnBootReceiver">

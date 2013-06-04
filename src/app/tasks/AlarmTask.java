@@ -1,12 +1,10 @@
 package app.tasks;
 
 import java.util.Calendar;
-import java.util.Random;
 
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.pm.ActivityInfo;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
@@ -14,17 +12,9 @@ import android.os.Bundle;
 import android.os.PowerManager;
 import android.os.Vibrator;
 import android.util.Log;
-import android.view.View;
 import android.view.WindowManager;
-import android.view.View.OnClickListener;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 import app.alarmmanager.AlarmSetter;
-import app.database.AlarmDbUtilities;
 import app.morningalarm.Alarm;
-import app.morningalarm.R;
 
 public abstract class AlarmTask extends Activity{
 
@@ -32,6 +22,7 @@ public abstract class AlarmTask extends Activity{
 	protected Ringtone ringtone;
 	protected Vibrator vibrator;
 	protected boolean finishAlarm;
+	protected boolean snooze;
 	protected Dialog dialog;
 	PowerManager pm;
 
@@ -39,21 +30,35 @@ public abstract class AlarmTask extends Activity{
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 		setSignals();
+		
+		dialog = new Dialog(this);
 		solveCondition();
 		
 		Thread thread = new Thread() {
-			public void run() {
+			public synchronized void run() {
 				Log.d("DEBUG_TAG", "thread running");
 				Calendar whenToTurnOff = Calendar.getInstance();
 				whenToTurnOff.add(Calendar.MINUTE, 2);
 				pm = (PowerManager) getSystemService(Context.POWER_SERVICE);
+				finishAlarm = false;
+				snooze = false;
 				
-				while (!(finishAlarm == true
-						|| whenToTurnOff.before(Calendar.getInstance()) || !pm.isScreenOn())) {
-
+				try {
+					wait(1000);
+				} catch (InterruptedException e) {
+				}
+			
+				
+				while (!(finishAlarm == true || snooze == true 
+						|| whenToTurnOff.before(Calendar.getInstance()) || pm.isScreenOn() == false)) {
+					try {
+						wait(200);
+						vibrator.vibrate(100);
+					} catch (InterruptedException e) {
+					}
 				}
 				Log.d("DEBUG_TAG", "updating alarm");
 				dialog.setCancelable(true);
@@ -62,11 +67,6 @@ public abstract class AlarmTask extends Activity{
 				vibrator.cancel();
 				if (finishAlarm) {
 					Log.d("DEBUG_TAG", "Set alarm on next day");
-					Calendar when = Calendar.getInstance();
-					when.setTimeInMillis(Long.parseLong(alarm.getTime()));
-					when.add(Calendar.DAY_OF_YEAR, 1);
-					alarm.setTime(when.getTimeInMillis() + "");
-					AlarmDbUtilities.updateAlarm(AlarmTask.this, alarm);
 					AlarmSetter aSetter = new AlarmSetter(AlarmTask.this);
 					aSetter.setAlarm(alarm);
 				}else{
@@ -80,22 +80,11 @@ public abstract class AlarmTask extends Activity{
 
 	}
 
-	private void setSignals() {
+	protected void setSignals() {
 		Uri sound = Uri.parse(alarm.getRingtone());
-		ringtone = RingtoneManager.getRingtone(getApplicationContext(), sound);
+		ringtone = RingtoneManager.getRingtone(AlarmTask.this, sound);
 		ringtone.play();
-		vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-		int dot = 200; // Length of a Morse Code "dot" in milliseconds
-		int dash = 500; // Length of a Morse Code "dash" in milliseconds
-		int short_gap = 200; // Length of Gap Between dots/dashes
-		int medium_gap = 500; // Length of Gap Between Letters
-		int long_gap = 1000; // Length of Gap Between Words
-		long[] pattern = { 0, // Start immediately
-				dot, short_gap, dot, short_gap, dot, // s
-				medium_gap, dash, short_gap, dash, short_gap, dash, // o
-				medium_gap, dot, short_gap, dot, short_gap, dot, // s
-				long_gap };
-		vibrator.vibrate(pattern, 17);
+		vibrator = (Vibrator) AlarmTask.this.getSystemService(Context.VIBRATOR_SERVICE);
 	}
 
 	protected abstract void solveCondition();

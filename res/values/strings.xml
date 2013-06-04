@@ -65,5 +65,8 @@
     <string name="delete_option_string">Delete alarm</string>
     <string name="title_for_math_test_view">Please write the right answer</string>
     <string name="math_test_solved">Solved</string>
+    <string name="option_menu_delete_all_option_title">Delete all alarms</string>
+    <string name="snooze_button_title">Snooze</string>
+    <string name="cancel_button">Cancel</string>
 
 </resources>

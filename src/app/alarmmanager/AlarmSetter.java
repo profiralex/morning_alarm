@@ -5,18 +5,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.AlarmManager;
-import android.app.Notification;
-import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import app.database.AlarmDbAdapter;
 import app.database.AlarmDbUtilities;
 import app.morningalarm.Alarm;
-import app.morningalarm.R;
 
 public class AlarmSetter {
 
@@ -35,21 +30,8 @@ public class AlarmSetter {
 		}
 	}
 	
-	/*public void setAlarm(Alarm alarm){
-		Intent i = new Intent (mContext, OnAlarmReceiver.class);
-		i.putExtra(AlarmDbAdapter.KEY_ID, alarm.getId());
-		PendingIntent pi = PendingIntent.getBroadcast(mContext,Integer.parseInt(alarm.getId()), i, PendingIntent.FLAG_ONE_SHOT);
-		mAlarmManager.set(AlarmManager.RTC_WAKEUP, Long.parseLong(alarm.getTime()), pi);
-		//log
-		Calendar c = Calendar.getInstance();
-    	c.setTimeInMillis(Long.parseLong(alarm.getTime()));
-    	DateFormat df=DateFormat.getTimeInstance(DateFormat.SHORT);
-		String time=df.format(c.getTime());
-		
-		Log.d("DEBUG_TAG", "alarm setted on "+ time);
-	}*/
-	
 	public void setAlarm(Alarm alarm){
+		alarm = getAlarmUpToDate(alarm);
 		Intent i = new Intent (mContext, OnAlarmReceiver.class);
 		i.putExtra(AlarmDbAdapter.KEY_ID, alarm.getId());
 		PendingIntent pi = PendingIntent.getBroadcast(mContext,Integer.parseInt(alarm.getId()), i, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -61,5 +43,34 @@ public class AlarmSetter {
 		String time=df.format(c.getTime());
 		
 		Log.d("DEBUG_TAG", "alarm setted on "+ time);
+	}
+	
+	private Alarm getAlarmUpToDate(Alarm alarm){
+		Calendar c = Calendar.getInstance();
+    	c.setTimeInMillis(Long.parseLong(alarm.getTime()));
+    	Calendar temp = Calendar.getInstance();
+    	if(!temp.before(c)){
+    		Log.d("DEBUG_TAG", "actualizeaza alarma");
+    		temp.set(Calendar.HOUR_OF_DAY, c.get(Calendar.HOUR_OF_DAY));
+    		temp.set(Calendar.MINUTE, c.get(Calendar.MINUTE));
+    		if(!Calendar.getInstance().before(temp)){
+    			temp.add(Calendar.DAY_OF_YEAR, 1);
+    		}
+    		temp.set(Calendar.SECOND, 0);
+    		alarm.setTime(temp.getTimeInMillis() + "");
+    	}
+    	c.setTimeInMillis(Long.parseLong(alarm.getTime()));
+    	DateFormat df=DateFormat.getDateTimeInstance();
+		String time=df.format(c.getTime());
+		Log.d("DEBUG_TAG","alarm updated to "+time );
+    	AlarmDbUtilities.updateAlarm(mContext, alarm);
+    	return alarm;
+	}
+	
+	public void removeAlarm(String alarmId){
+		Intent i = new Intent (mContext, OnAlarmReceiver.class);
+		PendingIntent pi = PendingIntent.getBroadcast(mContext,Integer.parseInt(alarmId), i, PendingIntent.FLAG_CANCEL_CURRENT);
+		mAlarmManager.cancel(pi);
+		Log.d("DEBUG_TAG", "alarm setted on "+ alarmId + "canceled");
 	}
 }

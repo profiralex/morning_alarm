@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.database.Cursor;
+import app.alarmmanager.AlarmSetter;
 import app.morningalarm.Alarm;
 
 public class AlarmDbUtilities {
@@ -98,13 +99,21 @@ public class AlarmDbUtilities {
         mDbHelper.open();
         mDbHelper.deleteAlarm(alarm);
         mDbHelper.close();
+        AlarmSetter aSetter = new AlarmSetter(context);
+        aSetter.removeAlarm(alarm.getId());
 	}
 	
 	public static final void deleteAll(Context context){
+		ArrayList<Alarm> alarms = fetchAllAlarms(context);
+		AlarmSetter aSetter = new AlarmSetter(context);
+		for(Alarm a: alarms ){
+	        aSetter.removeAlarm(a.getId());
+		}
 		AlarmDbAdapter mDbHelper = new AlarmDbAdapter(context);
         mDbHelper.open();
         mDbHelper.deletAll();
         mDbHelper.close();
+        
 	}
 	
 	public static final void updateAlarm(Context context, Alarm alarm){

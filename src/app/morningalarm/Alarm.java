@@ -1,65 +1,85 @@
 package app.morningalarm;
 
-import java.util.Calendar;
-
 public class Alarm {
-	private Calendar c;
-	private String method;
-	private String sound;
-	private boolean dow[];
-	private boolean enabled;
-
-	public Alarm(Calendar c, String sound, String method, boolean dow[],boolean enabled) {
-		this.c = c;
-		this.sound = sound;
-		this.method = method;
-		this.dow=dow;
-		this.enabled=enabled;
-	}
 	
-	public Alarm(){
-		this(Calendar.getInstance(),"calm","simple",null,true);
+	public static final int 	ALARM_ENABLED = 1;
+	public static final int 	ALARM_DISABLED = 0;
+	
+	private String id;
+	private int    enabled;
+	private String description;
+	private long   time;
+	private String daysOfWeek;
+	private String wakeUpMode;
+	private String ringtone;
+
+	public Alarm(String id, int enabled, String description, long time,String daysOfWeek, String wakeUpMode, String ringtone) {
+		this.id = id;
+		this.enabled=enabled;
+		this.description = description;
+		this.time = time;
+		this.daysOfWeek=daysOfWeek;
+		this.wakeUpMode = wakeUpMode;
+		this.ringtone = ringtone;
 	}
 
-	public Calendar getC() {
-		return c;
+	public long getTime() {
+		return time;
 	}
 
-	public void setC(Calendar c) {
-		this.c = c;
+	public void setTime(long time) {
+		this.time = time;
 	}
 
-	public String getMethod() {
-		return method;
+	public String getWakeUpMode() {
+		return wakeUpMode;
 	}
 
-	public void setMethod(String method) {
-		this.method = method;
+	public void setWakeUpMode(String wakeUpMode) {
+		this.wakeUpMode = wakeUpMode;
 	}
 
-	public String getSound() {
-		return sound;
+	public String getRingtone() {
+		return ringtone;
 	}
 
-	public void setSound(String sound) {
-		this.sound = sound;
+	public void setRingtone(String ringtone) {
+		this.ringtone = ringtone;
 	}
 
-	public boolean[] getDow() {
-		return dow;
+	public String getDaysOfWeek() {
+		return daysOfWeek;
 	}
 
-	public void setDow(boolean[] dow) {
-		this.dow = dow;
+	public void setDaysOfWeek(String daysOfWeek) {
+		this.daysOfWeek = daysOfWeek;
 	}
 
-	public boolean isEnabled() {
+	public int isEnabled() {
 		return enabled;
 	}
 
-	public void setEnabled(boolean enabled) {
+	public void setEnabled(int enabled) {
 		this.enabled = enabled;
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	
+	
 	
 }

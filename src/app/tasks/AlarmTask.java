@@ -24,8 +24,11 @@ public abstract class AlarmTask extends Activity{
 	protected boolean finishAlarm;
 	protected boolean snooze;
 	protected Dialog dialog;
-	PowerManager pm;
+	private PowerManager pm;
 
+	/**
+	 * metoda ce creaza activitatea
+	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -38,6 +41,10 @@ public abstract class AlarmTask extends Activity{
 		solveCondition();
 		
 		Thread thread = new Thread() {
+			/**
+			 * threadul ce ruleaza si verifica daca trebuie de inchis sau nu activitatea
+			 * si daca sa indeplinit conditia de inchidere a alarmei sau nu
+			 */
 			public synchronized void run() {
 				Log.d("DEBUG_TAG", "thread running");
 				Calendar whenToTurnOff = Calendar.getInstance();
@@ -80,6 +87,9 @@ public abstract class AlarmTask extends Activity{
 
 	}
 
+	/**
+	 * metoda ce seteaza semnalele sonore si de vibrare
+	 */
 	protected void setSignals() {
 		Uri sound = Uri.parse(alarm.getRingtone());
 		ringtone = RingtoneManager.getRingtone(AlarmTask.this, sound);
@@ -87,6 +97,10 @@ public abstract class AlarmTask extends Activity{
 		vibrator = (Vibrator) AlarmTask.this.getSystemService(Context.VIBRATOR_SERVICE);
 	}
 
+	/**
+	 * metoda ce seteaza valoarea variabilei finishAlarm cu true daca 
+	 * sa rezolvat sarcina sau da snooze
+	 */
 	protected abstract void solveCondition();
 
 	public static Alarm getAlarm() {

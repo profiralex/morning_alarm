@@ -27,6 +27,10 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm> {
 		this.alarms = objects;
 	}
 	
+	/**
+	 * reprezinta metoda ce adapteaza vederile cu continutul alarmelor 
+	 * la lista de alarme
+	 */
 	@Override
     public View getView(int position, View convertView, ViewGroup parent) {
             View v = convertView;

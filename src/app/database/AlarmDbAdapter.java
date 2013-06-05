@@ -37,21 +37,45 @@ public class AlarmDbAdapter {
 			+ KEY_RINGTONE + " text not null );";
 			
 	private final Context mCtx;
+	private static AlarmDbAdapter mAlarmDbAdapter;
+	
+	/**
+	 * @param context
+	 * metoda singleton
+	 */
+	public static AlarmDbAdapter getInstance(Context context){
+		if (mAlarmDbAdapter == null){
+			mAlarmDbAdapter = new AlarmDbAdapter(context);
+		}
+		return mAlarmDbAdapter;
+	}
+	
+	
 	
 	public AlarmDbAdapter(Context ctx){
 		mCtx = ctx;
 	}
 	
+	/**
+	 * deschide DataBaseHelper si primeste acces la baza de date
+	 * @throws SQLException
+	 */
 	public AlarmDbAdapter open() throws SQLException {
 		mDbHelper = new DatabaseHelper(mCtx);
 		mDb = mDbHelper.getWritableDatabase();
 		return this;
 	}
 	
+	/**
+	 * inchide database helper
+	 */
 	public void close(){
 		mDbHelper.close();
 	}
 	
+	/**
+	 * introduce alarma in baza de date
+	 */
 	public long createAlarm(){
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_DESCRIPTION, DATABASE_NEW_RECORD_CODE);
@@ -63,19 +87,31 @@ public class AlarmDbAdapter {
 		return mDb.insert(DATABASE_TABLE, null, initialValues);
 	}
 	
+	/**
+	 * sterge alarma din baza de date
+	 */
 	public long deleteAlarm(Alarm alarm){
 		return mDb.delete(DATABASE_TABLE, KEY_ID + "=" + alarm.getId() ,null);
 	}
 	
+	/**
+	 * sterge toate alarmele din baza de date
+	 */
 	public long deletAll(){
 		return mDb.delete(DATABASE_TABLE, null, null);
 	}
 	
+	/**
+	 * returneaza cursor ce contine toate alarmele
+	 */
 	public Cursor fetchAllAlarms(){
 		return mDb.query(DATABASE_TABLE, new String [] {KEY_ID,  KEY_ENABLED, KEY_DESCRIPTION,
 				KEY_TIME, KEY_DAYS_OF_WEEK, KEY_WAKE_UP_MODE,KEY_RINGTONE}, null, null, null,null,KEY_TIME);
 	}
 	
+	/**
+	 * returneaza cursor ce contine alarma cu id rowId
+	 */
 	public Cursor fetchAlarm(String rowId) throws SQLException{
 		Cursor mCursor = mDb.query(true, DATABASE_TABLE,new String [] {KEY_ID,  KEY_ENABLED, KEY_DESCRIPTION,
 				KEY_TIME, KEY_DAYS_OF_WEEK, KEY_WAKE_UP_MODE,KEY_RINGTONE} , KEY_ID + "=" + rowId , null, null, null, null,null);
@@ -85,6 +121,9 @@ public class AlarmDbAdapter {
 		return mCursor;
 	}
 	
+	/**
+	 * returneaza alarma cu descrierea de alarma noua
+	 */
 	public Cursor fetchNewAlarm() throws SQLException{
 		Cursor mCursor = mDb.query(DATABASE_TABLE,new String [] {KEY_ID,  KEY_ENABLED, KEY_DESCRIPTION,
 				KEY_TIME, KEY_DAYS_OF_WEEK, KEY_WAKE_UP_MODE,
@@ -95,6 +134,9 @@ public class AlarmDbAdapter {
 		return mCursor;
 	}
 
+	/**
+	 * face update la alarma
+	 */
 	public long updateAlarm(Alarm alarm){
 		ContentValues args = new ContentValues();
 		args.put(KEY_ID, alarm.getId());
@@ -107,17 +149,28 @@ public class AlarmDbAdapter {
 		return mDb.update(DATABASE_TABLE, args, KEY_ID + " = " + alarm.getId(), null);
 	}
 	
+	/**
+	 * clasa interna care va fi helperul pentru baza de date
+	 * @author ALEXANDR
+	 *
+	 */
 	private static class DatabaseHelper extends SQLiteOpenHelper{
 		
 		DatabaseHelper(Context context){
 			super(context,DATABASE_NAME,null,DATABASE_VERSION);
 		}
 		
+		/**
+		 * metoda apelata la create
+		 */
 		@Override
 		public void onCreate(SQLiteDatabase db){
 			db.execSQL(DATABASE_CREATE);
 		}
 		
+		/**
+		 * pentru dezvoltare ulterioara
+		 */
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion){
 			//pentru dezvoltare ulterioara

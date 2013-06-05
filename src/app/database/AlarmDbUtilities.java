@@ -10,6 +10,9 @@ import app.morningalarm.Alarm;
 
 public class AlarmDbUtilities {
 	
+	/**
+	 * returneaza arrayList cu toate alarmele din cursor
+	 */
 	public static final ArrayList<Alarm> fetchCursor(Cursor c){
 		ArrayList<Alarm> arr = new ArrayList<Alarm>();
 		if (c.moveToFirst()){
@@ -28,9 +31,12 @@ public class AlarmDbUtilities {
 		return arr;
 	}
 	
+	/**
+	 * returneaza toate alarmele din baza de date
+	 */
 	public static final ArrayList<Alarm> fetchAllAlarms(Context context){
 		ArrayList<Alarm> arr = new ArrayList<Alarm>();
-		AlarmDbAdapter mDbHelper = new AlarmDbAdapter(context);
+		AlarmDbAdapter mDbHelper = AlarmDbAdapter.getInstance(context);
         mDbHelper.open();
         Cursor c = mDbHelper.fetchAllAlarms();
 		if (c.moveToFirst()){
@@ -50,9 +56,12 @@ public class AlarmDbUtilities {
 		return arr;
 	}
 
+	/**
+	 * returneaza Alarma cu id-ul alarmId din baza de date
+	 */
 	public static final Alarm fetchAlarm(Context context, String alarmId){
 		Alarm alarm = null;
-		AlarmDbAdapter mDbHelper = new AlarmDbAdapter(context);
+		AlarmDbAdapter mDbHelper = AlarmDbAdapter.getInstance(context);
         mDbHelper.open();
         Cursor c = mDbHelper.fetchAlarm(alarmId);
 		if (c.moveToFirst()){
@@ -70,9 +79,12 @@ public class AlarmDbUtilities {
 		return alarm;
 	}
 
+	/**
+	 * returneaza din baza de date alarma nou creata
+	 */
 	public static final Alarm fetchNewAlarm(Context context){
 		Alarm alarm = null;
-		AlarmDbAdapter mDbHelper = new AlarmDbAdapter(context);
+		AlarmDbAdapter mDbHelper = AlarmDbAdapter.getInstance(context);
         mDbHelper.open();
         mDbHelper.createAlarm();
         Cursor c = mDbHelper.fetchNewAlarm();
@@ -91,32 +103,42 @@ public class AlarmDbUtilities {
 		return alarm;
 	}
 	
+	/**
+	 * sterge din baza de date alarma
+	 */
 	public static final void deleteAlarm(Context context, Alarm alarm){
-		AlarmDbAdapter mDbHelper = new AlarmDbAdapter(context);
+		AlarmDbAdapter mDbHelper = AlarmDbAdapter.getInstance(context);
         mDbHelper.open();
         mDbHelper.deleteAlarm(alarm);
         mDbHelper.close();
         AlarmSetter aSetter = new AlarmSetter(context);
         aSetter.removeAlarm(alarm.getId());
 	}
-	
+	/**
+	 * sterge toate alarmele din baza de date
+	 */
 	public static final void deleteAll(Context context){
 		ArrayList<Alarm> alarms = fetchAllAlarms(context);
 		AlarmSetter aSetter = new AlarmSetter(context);
 		for(Alarm a: alarms ){
 	        aSetter.removeAlarm(a.getId());
 		}
-		AlarmDbAdapter mDbHelper = new AlarmDbAdapter(context);
+		AlarmDbAdapter mDbHelper = AlarmDbAdapter.getInstance(context);
         mDbHelper.open();
         mDbHelper.deletAll();
         mDbHelper.close();
         
 	}
 	
+	/**
+	 * face update la alarma in baza de date
+	 */
 	public static final void updateAlarm(Context context, Alarm alarm){
-		AlarmDbAdapter mDbHelper = new AlarmDbAdapter(context);
+		
+		AlarmDbAdapter mDbHelper = AlarmDbAdapter.getInstance(context);
         mDbHelper.open();
         mDbHelper.updateAlarm(alarm);
         mDbHelper.close();
 	}
+	
 }

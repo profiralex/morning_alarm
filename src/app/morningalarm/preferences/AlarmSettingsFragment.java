@@ -10,6 +10,9 @@ import app.morningalarm.R.xml;
 @SuppressLint("NewApi")
 public class AlarmSettingsFragment extends PreferenceFragment {
 
+	/**
+	 * fragmentul ce afiseaza preferintele pentru versiuni >=3
+	 */
 	@SuppressLint("NewApi")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

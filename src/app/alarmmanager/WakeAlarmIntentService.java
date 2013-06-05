@@ -13,10 +13,18 @@ public abstract class WakeAlarmIntentService extends IntentService{
 	public static final String LOCK_NAME_STATIC = "app.android.morningalarm.Static";
 	public static PowerManager.WakeLock lockStatic = null;
 	
+	/**
+	 * @param context
+	 * pune lacat la context
+	 */
 	public static void acquireStaticLock(Context context){
 		getLock(context).acquire();
 	}
 	
+	/**
+	 * @param context
+	 * primeste lacat ca aplicatia sa fie in regim wake
+	 */
 	synchronized private static PowerManager.WakeLock getLock(Context context){
 		if(lockStatic == null){
 			PowerManager mgr = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
@@ -30,6 +38,10 @@ public abstract class WakeAlarmIntentService extends IntentService{
 		super(name);
 	}
 	
+	
+	/**
+	 * executa metoda doAlarmWork si elibereaza lacatul
+	 */
 	@Override
 	final protected void onHandleIntent(Intent intent){
 		try{

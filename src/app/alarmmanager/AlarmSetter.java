@@ -18,11 +18,16 @@ public class AlarmSetter {
 	private Context mContext;
 	private AlarmManager mAlarmManager;
 	private static final long FIVE_MINUTES = 300000L;
+	
 	public AlarmSetter(Context context){
 		mContext = context;
 		mAlarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 	}
 	
+	
+	/**
+	 * face refresh la toate alarmele, le seteaza din nou
+	 */
 	public void refreshAllAlarms(){
 		ArrayList <Alarm> alarms = AlarmDbUtilities.fetchAllAlarms(mContext);
 		for(Alarm alarm: alarms){
@@ -30,8 +35,12 @@ public class AlarmSetter {
 		}
 	}
 	
+	/**
+	 * @param alarm
+	 * seteaza alarma alarm
+	 */
 	public void setAlarm(Alarm alarm){
-		alarm = getAlarmUpToDate(alarm);
+		getAlarmUpToDate(alarm);
 		Intent i = new Intent (mContext, OnAlarmReceiver.class);
 		i.putExtra(AlarmDbAdapter.KEY_ID, alarm.getId());
 		PendingIntent pi = PendingIntent.getBroadcast(mContext,Integer.parseInt(alarm.getId()), i, PendingIntent.FLAG_UPDATE_CURRENT);
@@ -45,7 +54,11 @@ public class AlarmSetter {
 		Log.d("DEBUG_TAG", "alarm setted on "+ time);
 	}
 	
-	private Alarm getAlarmUpToDate(Alarm alarm){
+	/**
+	 * @param alarm
+	 * verifica daca alarma este trecuta de ora curenta atuni o muta pe ziua viitoare
+	 */
+	private void getAlarmUpToDate(Alarm alarm){
 		Calendar c = Calendar.getInstance();
     	c.setTimeInMillis(alarm.getTime());
     	Calendar temp = Calendar.getInstance();
@@ -64,9 +77,12 @@ public class AlarmSetter {
 		String time=df.format(c.getTime());
 		Log.d("DEBUG_TAG","alarm updated to "+time );
     	AlarmDbUtilities.updateAlarm(mContext, alarm);
-    	return alarm;
 	}
 	
+	/**
+	 * @param alarmId
+	 * sterge alarma cu id-ul alarmId din sistemul de operare
+	 */
 	public void removeAlarm(String alarmId){
 		Intent i = new Intent (mContext, OnAlarmReceiver.class);
 		PendingIntent pi = PendingIntent.getBroadcast(mContext,Integer.parseInt(alarmId), i, PendingIntent.FLAG_CANCEL_CURRENT);

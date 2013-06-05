@@ -112,9 +112,12 @@ public class ListPreferenceMultiSelect extends ListPreference {
     	}
     }
 
+    
+    /**
+     * se apeleaza la inchiderea preferintei
+     */
 	@Override
     protected void onDialogClosed(boolean positiveResult) {
-//        super.onDialogClosed(positiveResult);
 		ArrayList<String> values = new ArrayList<String>();
         
     	CharSequence[] entryValues = getEntryValues();
@@ -145,7 +148,6 @@ public class ListPreferenceMultiSelect extends ListPreference {
         return oBuilder.toString();
     }
 	
-	// TODO: Would like to keep this static but separator then needs to be put in by hand or use default separator "OV=I=XseparatorX=I=VO"...
 	/**
 	 * 
 	 * @param straw String to be found

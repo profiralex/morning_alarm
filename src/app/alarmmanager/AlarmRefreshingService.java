@@ -8,6 +8,9 @@ public class AlarmRefreshingService extends WakeAlarmIntentService{
 		super("AlarmService");
 	}
 	
+	/**
+	 * seteaza din nou toate alarmele
+	 */
 	@Override
 	void doAlarmWork(Intent intent){
 		Log.d("DEBUG_TAG", "alarm got in boot service ");

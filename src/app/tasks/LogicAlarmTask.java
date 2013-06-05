@@ -37,15 +37,16 @@ public class LogicAlarmTask extends AlarmTask {
 		
 	}
 
+	/**
+	 * metoda ce seteaza valoarea variabilei finishAlarm cu true daca 
+	 * sa rezolvat sarcina sau da snooze
+	 */
 	protected void solveCondition() {
-		finishAlarm = false;
 		dialog = new Dialog(this);
 		dialog.setContentView(R.layout.math_test_layout);
 		dialog.setTitle("Logic Test");
 		dialog.setCancelable(false);
 		dialog.show();
-		dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-		dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		
 		TextView textView = (TextView) dialog.findViewById(R.id.math_test_task);
 		final EditText editText = (EditText) dialog.findViewById(R.id.math_test_answer);

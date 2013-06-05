@@ -22,43 +22,25 @@
         <item >Saturday</item>
         
     </string-array>
-    <string-array name="duration_array">
-        <item >one day</item>
-        <item >one week</item>
-        <item >one month</item>
-        <item >one year</item>
-        <item >limitless</item>
-    </string-array>
     <string-array name="wake_up_mode_array">
         <item >simple</item>
         <item >math test</item>
-        <item >reaction test</item>
         <item >logic test</item>
-        <item >qr or barcode</item>
     </string-array>
     <string-array name="days_of_week_values"><item>#ALL#</item>
-        <item >0</item>
         <item >1</item>
         <item >2</item>
         <item >3</item>
         <item >4</item>
         <item >5</item>
         <item >6</item>
+        <item >7</item>
         
-    </string-array>
-    <string-array name="duration_values">
-        <item >0</item>
-        <item >1</item>
-        <item >2</item>
-        <item >3</item>
-        <item >4</item>
     </string-array>
     <string-array name="wake_up_mode_values">
         <item >0</item>
         <item >1</item>
         <item >2</item>
-        <item >3</item>
-        <item >4</item>
     </string-array>
     <string name="ring_tone_title">Ringtone</string>
     <string name="def_value_description">New alarm</string>

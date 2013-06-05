@@ -1,6 +1,7 @@
 package app.database;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -15,13 +16,12 @@ public class AlarmDbUtilities {
 			do{
 				String id = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_ID));
 				Integer enabled = Integer.parseInt(c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_ENABLED)));
-				String time = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_TIME));
+				long time = c.getLong(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_TIME));
 				String daysOfWeek = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DAYS_OF_WEEK));
-				String duration = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DURATION));
 				String wakeUpMode = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_WAKE_UP_MODE));
 				String ringtone = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_RINGTONE));
 				String description = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DESCRIPTION));
-				arr.add(new Alarm(id, enabled, description, time, daysOfWeek, duration, wakeUpMode, ringtone));
+				arr.add(new Alarm(id, enabled, description, time, daysOfWeek, wakeUpMode, ringtone));
 			}while(c.moveToNext());
 		}
 		c.close();
@@ -37,13 +37,12 @@ public class AlarmDbUtilities {
 			do{
 				String id = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_ID));
 				Integer enabled = Integer.parseInt(c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_ENABLED)));
-				String time = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_TIME));
+				long time = c.getLong(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_TIME));
 				String daysOfWeek = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DAYS_OF_WEEK));
-				String duration = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DURATION));
 				String wakeUpMode = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_WAKE_UP_MODE));
 				String ringtone = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_RINGTONE));
 				String description = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DESCRIPTION));
-				arr.add(new Alarm(id, enabled, description, time, daysOfWeek, duration, wakeUpMode, ringtone));
+				arr.add(new Alarm(id, enabled, description, time, daysOfWeek,wakeUpMode, ringtone));
 			}while(c.moveToNext());
 		}
 		c.close();
@@ -59,13 +58,12 @@ public class AlarmDbUtilities {
 		if (c.moveToFirst()){
 				String id = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_ID));
 				Integer enabled = Integer.parseInt(c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_ENABLED)));
-				String time = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_TIME));
+				long time = c.getLong(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_TIME));
 				String daysOfWeek = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DAYS_OF_WEEK));
-				String duration = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DURATION));
 				String wakeUpMode = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_WAKE_UP_MODE));
 				String ringtone = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_RINGTONE));
 				String description = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DESCRIPTION));
-				alarm = new Alarm(id, enabled, description, time, daysOfWeek, duration, wakeUpMode, ringtone);
+				alarm = new Alarm(id, enabled, description, time, daysOfWeek, wakeUpMode, ringtone);
 		}
 		c.close();
 		mDbHelper.close();
@@ -81,13 +79,12 @@ public class AlarmDbUtilities {
 		if (c.moveToFirst()){
 				String id = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_ID));
 				Integer enabled = Integer.parseInt(c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_ENABLED)));
-				String time = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_TIME));
+				long time = c.getLong(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_TIME));
 				String daysOfWeek = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DAYS_OF_WEEK));
-				String duration = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DURATION));
 				String wakeUpMode = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_WAKE_UP_MODE));
 				String ringtone = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_RINGTONE));
 				String description = c.getString(c.getColumnIndexOrThrow(AlarmDbAdapter.KEY_DESCRIPTION));
-				alarm = new Alarm(id, enabled, description, time, daysOfWeek, duration, wakeUpMode, ringtone);
+				alarm = new Alarm(id, enabled, description, time, daysOfWeek, wakeUpMode, ringtone);
 		}
 		c.close();
 		mDbHelper.close();

@@ -40,7 +40,6 @@ public class AlarmListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
-        //AlarmDbUtilities.deleteAll(this);
         alarmList = AlarmDbUtilities.fetchAllAlarms(this);
         Button b = (Button)this.findViewById(R.id.add_btn);
         b.setOnClickListener(new OnClickListener(){
@@ -148,11 +147,10 @@ public class AlarmListActivity extends Activity {
     	
 		String description = sp.getString("description", null);
 		String time = sp.getString("time", null);
-		String duration = sp.getString("duration", null);
 		String daysOfWeek = sp.getString("days_of_week", null);
 		String wakeUpMode = sp.getString("wake_up_mode", null);
 		String ringtone = sp.getString("ringtone", null);
-		
+		Log.d("DEBUG_TAG", ringtone);
 		Alarm alarm = alarmList.get(lastIndex);
 		Calendar when = Calendar.getInstance();
 		when.set(Calendar.SECOND,0);
@@ -164,8 +162,7 @@ public class AlarmListActivity extends Activity {
     	DateFormat df=DateFormat.getDateTimeInstance();
 		Log.d("DEBUG_TAG", "din preferinte a iesit cu :"+ df.format(when.getTime()));
 		alarm.setDescription(description);
-		alarm.setTime(when.getTimeInMillis() + "");
-		alarm.setDuration(duration);
+		alarm.setTime(when.getTimeInMillis());
 		alarm.setWakeUpMode(wakeUpMode);
 		alarm.setDaysOfWeek(daysOfWeek);
 		alarm.setRingtone(ringtone);

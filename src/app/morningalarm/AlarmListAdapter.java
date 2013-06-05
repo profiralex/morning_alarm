@@ -66,7 +66,7 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm> {
                     }
                     if(tv_big != null){
                     	Calendar c = Calendar.getInstance();
-                    	c.setTimeInMillis(Long.parseLong(li.getTime()));
+                    	c.setTimeInMillis(li.getTime());
                     	DateFormat df=DateFormat.getTimeInstance(DateFormat.SHORT);
                 		String time=df.format(c.getTime());
                         tv_big.setText(time);

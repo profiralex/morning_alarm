@@ -8,28 +8,26 @@ public class Alarm {
 	private String id;
 	private int    enabled;
 	private String description;
-	private String time;
+	private long   time;
 	private String daysOfWeek;
-	private String duration;
 	private String wakeUpMode;
 	private String ringtone;
 
-	public Alarm(String id, int enabled, String description, String time,String daysOfWeek, String duration, String wakeUpMode, String ringtone) {
+	public Alarm(String id, int enabled, String description, long time,String daysOfWeek, String wakeUpMode, String ringtone) {
 		this.id = id;
 		this.enabled=enabled;
 		this.description = description;
 		this.time = time;
 		this.daysOfWeek=daysOfWeek;
-		this.duration = duration;
 		this.wakeUpMode = wakeUpMode;
 		this.ringtone = ringtone;
 	}
 
-	public String getTime() {
+	public long getTime() {
 		return time;
 	}
 
-	public void setTime(String time) {
+	public void setTime(long time) {
 		this.time = time;
 	}
 
@@ -81,29 +79,7 @@ public class Alarm {
 		this.description = description;
 	}
 
-	public String getDuration() {
-		return duration;
-	}
-
-	public void setDuration(String duration) {
-		this.duration = duration;
-	}
 	
-	public static String convertArrayToString(String[] array){
-	    String str = "";
-	    for (int i = 0;i<array.length; i++) {
-	        str = str+array[i];
-	        // Do not append comma at the end of last element
-	        if(i<array.length-1){
-	            str = str+",";
-	        }
-	    }
-	    return str;
-	}
-	public static String[] convertStringToArray(String str){
-	    String[] arr = str.split(",");
-	    return arr;
-	}
-
+	
 	
 }

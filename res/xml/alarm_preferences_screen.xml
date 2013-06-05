@@ -15,12 +15,6 @@
     	android:entryValues="@array/days_of_week_values"
     	android:defaultValue="#ALL#"/>
     <ListPreference 
-        android:title="@string/duration_title" 
-        android:key="duration" 
-        android:entries="@array/duration_array" 
-        android:entryValues="@array/duration_values"
-        android:defaultValue="4"/>
-    <ListPreference 
         android:title="@string/wake_up_mode_title" 
         android:entries="@array/wake_up_mode_array" 
         android:key="wake_up_mode" 

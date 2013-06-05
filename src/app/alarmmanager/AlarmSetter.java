@@ -35,10 +35,10 @@ public class AlarmSetter {
 		Intent i = new Intent (mContext, OnAlarmReceiver.class);
 		i.putExtra(AlarmDbAdapter.KEY_ID, alarm.getId());
 		PendingIntent pi = PendingIntent.getBroadcast(mContext,Integer.parseInt(alarm.getId()), i, PendingIntent.FLAG_UPDATE_CURRENT);
-		mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, Long.parseLong(alarm.getTime()), FIVE_MINUTES, pi);
+		mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarm.getTime(), FIVE_MINUTES, pi);
 		//log
 		Calendar c = Calendar.getInstance();
-    	c.setTimeInMillis(Long.parseLong(alarm.getTime()));
+    	c.setTimeInMillis(alarm.getTime());
     	DateFormat df=DateFormat.getTimeInstance(DateFormat.SHORT);
 		String time=df.format(c.getTime());
 		
@@ -47,7 +47,7 @@ public class AlarmSetter {
 	
 	private Alarm getAlarmUpToDate(Alarm alarm){
 		Calendar c = Calendar.getInstance();
-    	c.setTimeInMillis(Long.parseLong(alarm.getTime()));
+    	c.setTimeInMillis(alarm.getTime());
     	Calendar temp = Calendar.getInstance();
     	if(!temp.before(c)){
     		Log.d("DEBUG_TAG", "actualizeaza alarma");
@@ -57,9 +57,9 @@ public class AlarmSetter {
     			temp.add(Calendar.DAY_OF_YEAR, 1);
     		}
     		temp.set(Calendar.SECOND, 0);
-    		alarm.setTime(temp.getTimeInMillis() + "");
+    		alarm.setTime(temp.getTimeInMillis());
     	}
-    	c.setTimeInMillis(Long.parseLong(alarm.getTime()));
+    	c.setTimeInMillis(alarm.getTime());
     	DateFormat df=DateFormat.getDateTimeInstance();
 		String time=df.format(c.getTime());
 		Log.d("DEBUG_TAG","alarm updated to "+time );

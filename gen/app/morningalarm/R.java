@@ -10,11 +10,9 @@ package app.morningalarm;
 public final class R {
     public static final class array {
         public static final int days_of_week_array=0x7f060000;
-        public static final int days_of_week_values=0x7f060003;
-        public static final int duration_array=0x7f060001;
-        public static final int duration_values=0x7f060004;
-        public static final int wake_up_mode_array=0x7f060002;
-        public static final int wake_up_mode_values=0x7f060005;
+        public static final int days_of_week_values=0x7f060002;
+        public static final int wake_up_mode_array=0x7f060001;
+        public static final int wake_up_mode_values=0x7f060003;
     }
     public static final class attr {
         /** <p>Must be a string value, using '\\;' to escape characters such as '\\n' or '\\uxxxx' for a unicode character.

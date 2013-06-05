@@ -13,14 +13,13 @@ public class AlarmDbAdapter {
 	public static final String DATABASE_NAME = "data";
 	private static final String DATABASE_TABLE = "alarms";
 	private static final int 	DATABASE_VERSION = 1;
-	private static final String DATABASE_NEW_RECORD_CODE = "1123581321345589"; //primele 11 numere Fibonacci
+	private static final String DATABASE_NEW_RECORD_CODE = "-1123581321345589"; //primele 11 numere Fibonacci
 	
 	public static final String KEY_ID = "id";
 	public static final String KEY_ENABLED = "enabled";
 	public static final String KEY_DESCRIPTION = "description";
 	public static final String KEY_TIME = "time";
 	public static final String KEY_DAYS_OF_WEEK = "days_of_week";
-	public static final String KEY_DURATION = "duration";
 	public static final String KEY_WAKE_UP_MODE = "wake_up_mode";
 	public static final String KEY_RINGTONE = "ringtone";
 	
@@ -32,11 +31,10 @@ public class AlarmDbAdapter {
 			+ KEY_ID + " integer primary key autoincrement, "
 			+ KEY_ENABLED + " integer not null, "
 			+ KEY_DESCRIPTION + " text not null, "
-			+ KEY_TIME + " text not null, "
+			+ KEY_TIME + " integer not null, "
 			+ KEY_DAYS_OF_WEEK + " text not null, "
-			+ KEY_DURATION + " text not null, "
 			+ KEY_WAKE_UP_MODE + " text not null, "
-			+ KEY_RINGTONE + " text not null);";
+			+ KEY_RINGTONE + " text not null );";
 			
 	private final Context mCtx;
 	
@@ -59,8 +57,7 @@ public class AlarmDbAdapter {
 		initialValues.put(KEY_DESCRIPTION, DATABASE_NEW_RECORD_CODE);
 		initialValues.put(KEY_ENABLED, Alarm.ALARM_DISABLED);
 		initialValues.put(KEY_DAYS_OF_WEEK, "");
-		initialValues.put(KEY_TIME, "");
-		initialValues.put(KEY_DURATION, "");
+		initialValues.put(KEY_TIME, 0);
 		initialValues.put(KEY_WAKE_UP_MODE, "");
 		initialValues.put(KEY_RINGTONE, "");
 		return mDb.insert(DATABASE_TABLE, null, initialValues);
@@ -76,14 +73,12 @@ public class AlarmDbAdapter {
 	
 	public Cursor fetchAllAlarms(){
 		return mDb.query(DATABASE_TABLE, new String [] {KEY_ID,  KEY_ENABLED, KEY_DESCRIPTION,
-				KEY_TIME, KEY_DAYS_OF_WEEK, KEY_DURATION, KEY_WAKE_UP_MODE,
-				KEY_RINGTONE}, null, null, null,null,KEY_TIME);
+				KEY_TIME, KEY_DAYS_OF_WEEK, KEY_WAKE_UP_MODE,KEY_RINGTONE}, null, null, null,null,KEY_TIME);
 	}
 	
 	public Cursor fetchAlarm(String rowId) throws SQLException{
 		Cursor mCursor = mDb.query(true, DATABASE_TABLE,new String [] {KEY_ID,  KEY_ENABLED, KEY_DESCRIPTION,
-				KEY_TIME, KEY_DAYS_OF_WEEK, KEY_DURATION, KEY_WAKE_UP_MODE,
-				KEY_RINGTONE} , KEY_ID + "=" + rowId , null, null, null, null,null);
+				KEY_TIME, KEY_DAYS_OF_WEEK, KEY_WAKE_UP_MODE,KEY_RINGTONE} , KEY_ID + "=" + rowId , null, null, null, null,null);
 		if(mCursor != null){
 			mCursor.moveToFirst();
 		}
@@ -92,14 +87,14 @@ public class AlarmDbAdapter {
 	
 	public Cursor fetchNewAlarm() throws SQLException{
 		Cursor mCursor = mDb.query(DATABASE_TABLE,new String [] {KEY_ID,  KEY_ENABLED, KEY_DESCRIPTION,
-				KEY_TIME, KEY_DAYS_OF_WEEK, KEY_DURATION, KEY_WAKE_UP_MODE,
+				KEY_TIME, KEY_DAYS_OF_WEEK, KEY_WAKE_UP_MODE,
 				KEY_RINGTONE} , KEY_DESCRIPTION +"=?", new String[]{DATABASE_NEW_RECORD_CODE}, null, null, null);
 		if(mCursor != null){
 			mCursor.moveToFirst();
 		}
 		return mCursor;
 	}
-	
+
 	public long updateAlarm(Alarm alarm){
 		ContentValues args = new ContentValues();
 		args.put(KEY_ID, alarm.getId());
@@ -107,7 +102,6 @@ public class AlarmDbAdapter {
 		args.put(KEY_ENABLED, alarm.isEnabled());
 		args.put(KEY_TIME, alarm.getTime());
 		args.put(KEY_DAYS_OF_WEEK, alarm.getDaysOfWeek());
-		args.put(KEY_DURATION, alarm.getDuration());
 		args.put(KEY_WAKE_UP_MODE, alarm.getWakeUpMode());
 		args.put(KEY_RINGTONE, alarm.getRingtone());
 		return mDb.update(DATABASE_TABLE, args, KEY_ID + " = " + alarm.getId(), null);

@@ -57,5 +57,17 @@
         <receiver android:name="app.alarmmanager.OnAlarmReceiver" android:enabled="true"/>
         <service android:name="app.alarmmanager.AlarmService"/>
         <service android:name="app.alarmmanager.AlarmRefreshingService"/>
+        <receiver
+	       android:icon="@drawable/ic_launcher"
+	       android:label="Mornin Alarm Widget"
+	       android:name="app.morningalarm.MorningAlarmWidgetProvider" >
+	       <intent-filter >
+	            <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+	       </intent-filter>
+	
+	       <meta-data
+	          android:name="android.appwidget.provider"
+	          android:resource="@xml/widget_info" />
+		</receiver> 
 	</application>
 </manifest>

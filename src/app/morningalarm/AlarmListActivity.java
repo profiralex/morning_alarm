@@ -172,14 +172,11 @@ public class AlarmListActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
     	super.onActivityResult(requestCode, resultCode, data);
     	SharedPreferences sp= this.getSharedPreferences(lastId, Context.MODE_PRIVATE);
-    	
 		String description = sp.getString("description", null);
-		sp.edit().putString("description", "New Alarm");
 		String time = sp.getString("time", null);
 		String daysOfWeek = sp.getString("days_of_week", null);
 		String wakeUpMode = sp.getString("wake_up_mode", null);
 		String ringtone = sp.getString("ringtone", null);
-		Log.d("DEBUG_TAG", ringtone);
 		Alarm alarm = alarmList.get(lastIndex);
 		Calendar when = Calendar.getInstance();
 		when.set(Calendar.SECOND,0);

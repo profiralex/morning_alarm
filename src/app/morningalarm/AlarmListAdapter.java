@@ -51,10 +51,12 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm> {
 							AlarmSetter aSetter = new AlarmSetter(AlarmListAdapter.this.getContext());
 							if(li.isEnabled() == Alarm.ALARM_ENABLED){
 								li.setEnabled(Alarm.ALARM_DISABLED);
+								AlarmDbUtilities.updateAlarm(AlarmListAdapter.this.getContext(), li);
 								aSetter.removeAlarm(li.getId());
 							}
 							else{
 								li.setEnabled(Alarm.ALARM_ENABLED);
+								AlarmDbUtilities.updateAlarm(AlarmListAdapter.this.getContext(), li);
 								aSetter.setAlarm(li);
 							}
 						}

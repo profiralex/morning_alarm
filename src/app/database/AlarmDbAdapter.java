@@ -135,6 +135,19 @@ public class AlarmDbAdapter {
 	}
 
 	/**
+	 * returneaza alarma cu descrierea de alarma noua
+	 */
+	public Cursor fetchEnabledAlarms() throws SQLException{
+		Cursor mCursor = mDb.query(DATABASE_TABLE,new String [] {KEY_ID,  KEY_ENABLED, KEY_DESCRIPTION,
+				KEY_TIME, KEY_DAYS_OF_WEEK, KEY_WAKE_UP_MODE,
+				KEY_RINGTONE} , KEY_ENABLED +"=?", new String[]{Alarm.ALARM_ENABLED + ""}, null, null, null);
+		if(mCursor != null){
+			mCursor.moveToFirst();
+		}
+		return mCursor;
+	}
+	
+	/**
 	 * face update la alarma
 	 */
 	public long updateAlarm(Alarm alarm){
@@ -148,6 +161,7 @@ public class AlarmDbAdapter {
 		args.put(KEY_RINGTONE, alarm.getRingtone());
 		return mDb.update(DATABASE_TABLE, args, KEY_ID + " = " + alarm.getId(), null);
 	}
+	
 	
 	/**
 	 * clasa interna care va fi helperul pentru baza de date

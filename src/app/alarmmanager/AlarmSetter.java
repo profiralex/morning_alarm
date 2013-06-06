@@ -5,13 +5,17 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.RemoteViews;
 import app.database.AlarmDbAdapter;
 import app.database.AlarmDbUtilities;
 import app.morningalarm.Alarm;
+import app.morningalarm.R;
 
 public class AlarmSetter {
 
@@ -42,8 +46,14 @@ public class AlarmSetter {
 	public void setAlarm(Alarm alarm){
 		getAlarmUpToDate(alarm);
 		Intent i = new Intent (mContext, OnAlarmReceiver.class);
+		
 		i.putExtra(AlarmDbAdapter.KEY_ID, alarm.getId());
 		PendingIntent pi = PendingIntent.getBroadcast(mContext,Integer.parseInt(alarm.getId()), i, PendingIntent.FLAG_UPDATE_CURRENT);
+		
+		RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(),
+		          R.layout.home_screen_widget);
+		remoteViews.setImageViewResource(R.id.home_screen_iv, R.drawable.clock1);
+		
 		mAlarmManager.setRepeating(AlarmManager.RTC_WAKEUP, alarm.getTime(), FIVE_MINUTES, pi);
 		//log
 		Calendar c = Calendar.getInstance();
@@ -87,6 +97,13 @@ public class AlarmSetter {
 		Intent i = new Intent (mContext, OnAlarmReceiver.class);
 		PendingIntent pi = PendingIntent.getBroadcast(mContext,Integer.parseInt(alarmId), i, PendingIntent.FLAG_CANCEL_CURRENT);
 		mAlarmManager.cancel(pi);
+		
+		if(AlarmDbUtilities.fetchEnabledAlarms(mContext).size() == 0){
+			RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(),
+			          R.layout.home_screen_widget);
+			remoteViews.setImageViewResource(R.id.home_screen_iv, R.drawable.clock2);
+		}
+		
 		Log.d("DEBUG_TAG", "alarm setted on "+ alarmId + "canceled");
 	}
 }

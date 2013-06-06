@@ -5,8 +5,9 @@ import java.util.Calendar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.Ringtone;
-import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.PowerManager;
@@ -21,6 +22,7 @@ public abstract class AlarmTask extends Activity{
 	protected static Alarm alarm;
 	protected Ringtone ringtone;
 	protected Vibrator vibrator;
+	protected MediaPlayer mMediaPlayer;
 	protected boolean finishAlarm;
 	protected boolean snooze;
 	protected Dialog dialog;
@@ -70,7 +72,8 @@ public abstract class AlarmTask extends Activity{
 				Log.d("DEBUG_TAG", "updating alarm");
 				dialog.setCancelable(true);
 				dialog.dismiss();
-				ringtone.stop();
+				mMediaPlayer.stop();
+				//ringtone.stop();
 				vibrator.cancel();
 				if (finishAlarm) {
 					Log.d("DEBUG_TAG", "Set alarm on next day");
@@ -91,9 +94,22 @@ public abstract class AlarmTask extends Activity{
 	 * metoda ce seteaza semnalele sonore si de vibrare
 	 */
 	protected void setSignals() {
-		Uri sound = Uri.parse(alarm.getRingtone());
-		ringtone = RingtoneManager.getRingtone(AlarmTask.this, sound);
-		ringtone.play();
+		
+		try {
+			Uri sound = Uri.parse(alarm.getRingtone());
+			mMediaPlayer = new MediaPlayer();
+			mMediaPlayer.setDataSource(this, sound);
+			final AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+			if (audioManager.getStreamVolume(AudioManager.STREAM_RING) != 0) {
+				mMediaPlayer.setAudioStreamType(AudioManager.STREAM_RING);
+				mMediaPlayer.setLooping(true);
+				mMediaPlayer.prepare();
+				mMediaPlayer.start();
+			}
+		} catch(Exception e) {
+		} 
+		/*ringtone = RingtoneManager.getRingtone(AlarmTask.this, sound);
+		ringtone.play();*/
 		vibrator = (Vibrator) AlarmTask.this.getSystemService(Context.VIBRATOR_SERVICE);
 	}
 

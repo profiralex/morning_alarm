@@ -11,9 +11,9 @@ import app.morningalarm.Alarm;
 public class AlarmDbAdapter {
 
 	public static final String DATABASE_NAME = "data";
-	private static final String DATABASE_TABLE = "alarms";
-	private static final int 	DATABASE_VERSION = 1;
-	private static final String DATABASE_NEW_RECORD_CODE = "-1123581321345589"; //primele 11 numere Fibonacci
+	public static final String DATABASE_TABLE = "alarms";
+	public static final int 	DATABASE_VERSION = 1;
+	public static final String DATABASE_NEW_RECORD_CODE = "-1123581321345589"; //primele 11 numere Fibonacci
 	
 	public static final String KEY_ID = "id";
 	public static final String KEY_ENABLED = "enabled";

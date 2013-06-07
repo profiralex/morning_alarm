@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.content.Context;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -14,7 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 import app.alarmmanager.AlarmSetter;
-import app.database.AlarmDbAdapter;
 import app.database.AlarmDbUtilities;
 
 public class AlarmListAdapter extends ArrayAdapter<Alarm> {
@@ -63,19 +63,37 @@ public class AlarmListAdapter extends ArrayAdapter<Alarm> {
                     	
                     });
                     if (iv != null) {
-                    	if(li.getWakeUpMode().equals("simple"))
-                    		iv.setImageResource(R.drawable.ic_launcher);
-                    	if(li.getWakeUpMode().equals("logic"))
-                    		iv.setImageResource(R.drawable.ic_launcher);
-                    	if(li.getWakeUpMode().equals("scanner"))
-                    		iv.setImageResource(R.drawable.ic_launcher);
+                    	if(li.getWakeUpMode().equals("0"))
+                    		iv.setImageResource(R.drawable.simple_test);
+                    	if(li.getWakeUpMode().equals("1"))
+                    		iv.setImageResource(R.drawable.mathtest);
+                    	if(li.getWakeUpMode().equals("2"))
+                    		iv.setImageResource(R.drawable.logic_test);
                     }
                     if(tv_big != null){
                     	Calendar c = Calendar.getInstance();
                     	c.setTimeInMillis(li.getTime());
                     	DateFormat df=DateFormat.getTimeInstance(DateFormat.SHORT);
-                		String time=df.format(c.getTime());
-                        tv_big.setText(time);
+                		String bigView="<b>" + df.format(c.getTime())+ "</b>    ";
+                		String arr[] = {"S","M","T","W","T","F","S"};
+                		String daysOfWeek = li.getDaysOfWeek();
+                		if(daysOfWeek.contains("#ALL#")){
+                			for(int i=1;i<8;i++){
+                				bigView += "<font color=\"blue\"<u>"+arr[i-1]+"</u></font> ";
+                			}
+                			
+                		}
+                		else{
+                			for(int i=1;i<8;i++){
+                				if(daysOfWeek.contains(i+"")){
+                					bigView += "<font color=\"blue\"<u>"+arr[i-1]+"</u></font> ";
+                				}else{
+                					bigView += "<font color=\"red\"<u>"+arr[i-1]+"</u></font> ";
+                				}
+                					
+                			}
+                		}
+                        tv_big.setText(Html.fromHtml(bigView));
                     }
                     
                     if(tv_small != null){

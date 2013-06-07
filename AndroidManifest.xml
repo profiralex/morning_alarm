@@ -59,7 +59,7 @@
         <service android:name="app.alarmmanager.AlarmRefreshingService"/>
         <receiver
 	       android:icon="@drawable/ic_launcher"
-	       android:label="Mornin Alarm Widget"
+	       android:label="Morning Alarm Widget"
 	       android:name="app.morningalarm.MorningAlarmWidgetProvider" >
 	       <intent-filter >
 	            <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -69,5 +69,6 @@
 	          android:name="android.appwidget.provider"
 	          android:resource="@xml/widget_info" />
 		</receiver> 
+		<service android:name="app.morningalarm.MorningAlarmWidgetProvider$ToggleService"/>
 	</application>
 </manifest>

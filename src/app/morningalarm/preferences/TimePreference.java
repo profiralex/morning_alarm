@@ -40,7 +40,8 @@ public class TimePreference extends DialogPreference {
 	    final String storedValue = getPersistedString(time);
 	    final String[] split = storedValue.split(":");
 	    this.tp.setCurrentHour(Integer.parseInt(split[0]));
-	    this.tp.setCurrentMinute(Integer.parseInt(split[1]));
+	    final String[] split2 =split[1].split(" ");
+	    this.tp.setCurrentMinute(Integer.parseInt(split2[0]));
 	    return this.tp;
 	}
 

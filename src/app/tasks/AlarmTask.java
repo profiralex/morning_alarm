@@ -20,6 +20,7 @@ import app.morningalarm.Alarm;
 public abstract class AlarmTask extends Activity{
 
 	protected static Alarm alarm;
+	protected static boolean active;
 	protected Ringtone ringtone;
 	protected Vibrator vibrator;
 	protected MediaPlayer mMediaPlayer;
@@ -83,6 +84,7 @@ public abstract class AlarmTask extends Activity{
 					Log.d("DEBUG_TAG", "Snooze");
 				}
 				AlarmTask.this.finish();
+				AlarmTask.setInActive();
 				Log.d("DEBUG_TAG", "thread over");
 			}
 		};
@@ -127,6 +129,17 @@ public abstract class AlarmTask extends Activity{
 		alarm = newAlarm;
 	}
 	
+	synchronized public static void setActive(){
+		active = true;
+	}
+	
+	synchronized public static void setInActive(){
+		active = false;
+	}
+	
+	public static boolean isActive(){
+		return active;
+	}
 	
 	
 }

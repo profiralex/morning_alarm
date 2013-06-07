@@ -4,7 +4,6 @@ import java.util.Calendar;
 
 import android.content.Intent;
 import android.util.Log;
-import android.widget.Toast;
 import app.database.AlarmDbAdapter;
 import app.database.AlarmDbUtilities;
 import app.morningalarm.Alarm;
@@ -18,17 +17,27 @@ public class AlarmService extends WakeAlarmIntentService{
 		super("AlarmService");
 	}
 	
+	
+	/**
+	 * este apelat cind a fost primit un semnal de alarma
+	 * metoda primeste prin extras parametrul ID dupa care cauta alarma in baza de date 
+	 * si afla daca trebuie sa fie apelata activitatea de afisare sau trebuie resetata alarma 
+	 * pe ziua urmatoare 
+	 */
 	@Override
 	void doAlarmWork(Intent intent){
 		Log.d("DEBUG_TAG", "alarm got in service");
+		
 		String alarmId = intent.getExtras().getString(AlarmDbAdapter.KEY_ID);
 		AlarmSetter aSetter = new AlarmSetter(this);
 		Alarm alarm = AlarmDbUtilities.fetchAlarm(this, alarmId);
+		
 		if(alarm != null && alarm.isEnabled() == Alarm.ALARM_ENABLED){		
 			
 			Log.d("DEBUG_TAG", alarm.getDaysOfWeek());
-			String daysOfWeek = alarm.getDaysOfWeek();
 			Log.d("DEBUG_TAG", alarm.getRingtone());
+			
+			String daysOfWeek = alarm.getDaysOfWeek();
 			int today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 			if(daysOfWeek.contains("#ALL#") || daysOfWeek.contains(today+""))
 			{

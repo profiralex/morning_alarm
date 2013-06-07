@@ -33,36 +33,37 @@ containing a value of this type.
         public static final int separator=0x7f010001;
     }
     public static final class drawable {
-        public static final int ic_action_search=0x7f020000;
-        public static final int ic_launcher=0x7f020001;
-        public static final int tiger=0x7f020002;
+        public static final int clock1=0x7f020000;
+        public static final int clock2=0x7f020001;
+        public static final int ic_launcher=0x7f020002;
+        public static final int logic_test=0x7f020003;
+        public static final int mathtest=0x7f020004;
+        public static final int simple_test=0x7f020005;
     }
     public static final class id {
         public static final int LinearLayout1=0x7f090000;
         public static final int add_btn=0x7f090001;
-        public static final int alarm_iv=0x7f090007;
-        public static final int alarm_tb=0x7f090004;
-        public static final int alarm_tv_big=0x7f090005;
-        public static final int alarm_tv_small=0x7f090006;
-        public static final int delete_option=0x7f090012;
+        public static final int alarm_iv=0x7f090008;
+        public static final int alarm_tb=0x7f090005;
+        public static final int alarm_tv_big=0x7f090006;
+        public static final int alarm_tv_small=0x7f090007;
+        public static final int delete_option=0x7f090010;
+        public static final int home_screen_iv=0x7f090004;
         public static final int id_empty_list_text_view=0x7f090003;
         public static final int listView1=0x7f090002;
-        public static final int logic_test_answer_button=0x7f09000a;
-        public static final int logic_test_edit_text=0x7f090009;
-        public static final int logic_test_image_view=0x7f090008;
-        public static final int math_test_answer=0x7f09000d;
-        public static final int math_test_button=0x7f09000e;
-        public static final int math_test_task=0x7f09000c;
-        public static final int menu_delete_all_option=0x7f090013;
-        public static final int menu_settings=0x7f090011;
-        public static final int simple_test_cancel_button=0x7f090010;
-        public static final int simple_test_snooze_button=0x7f09000f;
-        public static final int textView1=0x7f09000b;
+        public static final int math_test_answer=0x7f09000b;
+        public static final int math_test_button=0x7f09000c;
+        public static final int math_test_task=0x7f09000a;
+        public static final int menu_delete_all_option=0x7f090011;
+        public static final int menu_settings=0x7f09000f;
+        public static final int simple_test_cancel_button=0x7f09000e;
+        public static final int simple_test_snooze_button=0x7f09000d;
+        public static final int textView1=0x7f090009;
     }
     public static final class layout {
         public static final int activity_main=0x7f030000;
-        public static final int list_item_main=0x7f030001;
-        public static final int logic_alarm_test_layout=0x7f030002;
+        public static final int home_screen_widget=0x7f030001;
+        public static final int list_item_main=0x7f030002;
         public static final int math_test_layout=0x7f030003;
         public static final int simple_test_layout=0x7f030004;
     }
@@ -99,6 +100,7 @@ containing a value of this type.
     }
     public static final class xml {
         public static final int alarm_preferences_screen=0x7f040000;
+        public static final int widget_info=0x7f040001;
     }
     public static final class styleable {
         /** Attributes that can be used with a ListPreferenceMultiSelect.

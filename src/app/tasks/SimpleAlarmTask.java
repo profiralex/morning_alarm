@@ -19,13 +19,9 @@ public class SimpleAlarmTask extends AlarmTask {
 	}
 
 	protected void solveCondition() {
-		//finishAlarm = false;
-		//dialog = new Dialog(this);
 		dialog.setContentView(R.layout.simple_test_layout);
 		dialog.setTitle("Cancel Alarm or Snooze for 5 minutes");
 		dialog.setCancelable(false);
-		//dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
-		//dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		dialog.show();
 		
 		
@@ -46,11 +42,4 @@ public class SimpleAlarmTask extends AlarmTask {
 		Log.d("DEBUG_TAG", "exit solvecondition method");
 	}
 
-	public static Alarm getAlarm() {
-		return alarm;
-	}
-
-	public static void setAlarm(Alarm newAlarm) {
-		alarm = newAlarm;
-	}
 }

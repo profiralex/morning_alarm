@@ -27,6 +27,9 @@ public class TimePreference extends DialogPreference {
 		initialize();
 	}
 	
+	/**
+	 * creaza fereastra de dialog cu timepicker
+	 */
 	@Override
 	protected View onCreateDialogView() {
 	    this.tp = new TimePicker(getContext());
@@ -41,6 +44,9 @@ public class TimePreference extends DialogPreference {
 	    return this.tp;
 	}
 
+	/**
+	 * salveaza starea la inchiderea ferestrei de dialog
+	 */
 	@Override
 	public void onDialogClosed(boolean positiveResult) {
 	    super.onDialogClosed(positiveResult);

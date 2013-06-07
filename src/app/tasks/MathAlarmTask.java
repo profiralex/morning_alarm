@@ -26,15 +26,16 @@ public class MathAlarmTask extends AlarmTask {
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 		
 	}
-
+	/**
+	 * metoda ce seteaza valoarea variabilei finishAlarm cu true daca 
+	 * sa rezolvat sarcina sau da snooze
+	 */
 	protected void solveCondition() {
-		finishAlarm = false;
 		dialog = new Dialog(this);
 		dialog.setContentView(R.layout.math_test_layout);
 		dialog.setTitle("Math Test");
 		dialog.setCancelable(false);
 		dialog.show();
-		dialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED);
 		
 		TextView textView = (TextView) dialog.findViewById(R.id.math_test_task);
 		final EditText editText = (EditText) dialog.findViewById(R.id.math_test_answer);
@@ -62,11 +63,4 @@ public class MathAlarmTask extends AlarmTask {
 		Log.d("DEBUG_TAG", "exit solvecondition method");
 	}
 
-	public static Alarm getAlarm() {
-		return alarm;
-	}
-
-	public static void setAlarm(Alarm newAlarm) {
-		alarm = newAlarm;
-	}
 }

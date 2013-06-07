@@ -35,6 +35,10 @@ public class AlarmListActivity extends Activity {
 	private int lastIndex;
 	private AlarmListAdapter ad;
 	
+	/**
+	 * metoda atribuie listei din vedere adapterul pentru afisarea alarmelor setate
+	 * si atribuie listeneruri pentru butoane
+	 */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,7 +47,9 @@ public class AlarmListActivity extends Activity {
         alarmList = AlarmDbUtilities.fetchAllAlarms(this);
         Button b = (Button)this.findViewById(R.id.add_btn);
         b.setOnClickListener(new OnClickListener(){
-
+        	/**
+        	 * listener onclick pentru butonul add Alarm
+        	 */
 			public void onClick(View arg0) {
 				Alarm newAlarm = AlarmDbUtilities.fetchNewAlarm(AlarmListActivity.this);
 				lastIndex = alarmList.size();
@@ -66,9 +72,10 @@ public class AlarmListActivity extends Activity {
         ListView lv=(ListView)this.findViewById(R.id.listView1);
         lv.setAdapter(ad);
         
-        
         lv.setOnItemClickListener(new OnItemClickListener(){
-        
+        	/**
+        	 * metoda onclick pentru Listenerul al elementului din lista
+        	 */
 			@SuppressLint("NewApi")
 			public void onItemClick(AdapterView<?> adapter, View view, int arg,
 					long position) {
@@ -90,6 +97,9 @@ public class AlarmListActivity extends Activity {
         this.registerForContextMenu(lv);
     }
     
+    /**
+     * metoda ce determina daca trebuie afisat sau nu textview cu textul ca nu sint alarme
+     */
     private void emptyTextViewVisibility(){
     	if(alarmList.size()>0)
         	findViewById(R.id.id_empty_list_text_view).setVisibility(View.GONE);
@@ -97,6 +107,9 @@ public class AlarmListActivity extends Activity {
     		findViewById(R.id.id_empty_list_text_view).setVisibility(View.VISIBLE);
     }
     
+    /**
+     * creaza meniu cu optiuni
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
     	super.onCreateOptionsMenu(menu);
@@ -104,6 +117,10 @@ public class AlarmListActivity extends Activity {
         return true;
     }
     
+    /**
+     * se apeleaza la alegerea unui element din meniul cu optiuni
+     * si sterge toate alarmele
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item){
     	super.onOptionsItemSelected(item);
@@ -118,12 +135,19 @@ public class AlarmListActivity extends Activity {
     	return true;
     }
     
+    /**
+     * se apeleaza la crearea de meniu context
+     */
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     	super.onCreateContextMenu(menu, v, menuInfo);
         getMenuInflater().inflate(R.menu.context_menu, menu);
     }
     
+    /**
+     * se apeleaza la alegerea unui element din meniul context
+     * si sterge elementul ales
+     */
     @Override
     public boolean onContextItemSelected(MenuItem item){
     	super.onContextItemSelected(item);
@@ -140,17 +164,19 @@ public class AlarmListActivity extends Activity {
     	return true;
     }
     
+    /**
+     * se apeleaza la revenirea din preferinte
+     * seteaza alarma sau actualizeaza pe una existenta
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
     	super.onActivityResult(requestCode, resultCode, data);
     	SharedPreferences sp= this.getSharedPreferences(lastId, Context.MODE_PRIVATE);
-    	
 		String description = sp.getString("description", null);
 		String time = sp.getString("time", null);
 		String daysOfWeek = sp.getString("days_of_week", null);
 		String wakeUpMode = sp.getString("wake_up_mode", null);
 		String ringtone = sp.getString("ringtone", null);
-		Log.d("DEBUG_TAG", ringtone);
 		Alarm alarm = alarmList.get(lastIndex);
 		Calendar when = Calendar.getInstance();
 		when.set(Calendar.SECOND,0);

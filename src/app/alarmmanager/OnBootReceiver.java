@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class OnBootReceiver extends BroadcastReceiver{
 
-	
+	public static String MSG;
 	/**
 	 * metoda este apelata atunc cind telefonul a fost resetat
 	 * la primirea semnalului apeleaza service-ul alarmRefreshingService 

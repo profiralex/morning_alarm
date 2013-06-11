@@ -30,7 +30,7 @@ public abstract class AlarmTask extends Activity{
 	private PowerManager pm;
 
 	/**
-	 * metoda ce creaza activitatea
+	 * metoda ce se apeleaza cind se creaza activitatea
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -39,7 +39,6 @@ public abstract class AlarmTask extends Activity{
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 		setSignals();
-		
 		dialog = new Dialog(this);
 		solveCondition();
 		
@@ -57,7 +56,7 @@ public abstract class AlarmTask extends Activity{
 				snooze = false;
 				
 				try {
-					wait(1000);
+					wait(300);
 				} catch (InterruptedException e) {
 				}
 			
@@ -74,7 +73,6 @@ public abstract class AlarmTask extends Activity{
 				dialog.setCancelable(true);
 				dialog.dismiss();
 				mMediaPlayer.stop();
-				//ringtone.stop();
 				vibrator.cancel();
 				if (finishAlarm) {
 					Log.d("DEBUG_TAG", "Set alarm on next day");
@@ -121,24 +119,51 @@ public abstract class AlarmTask extends Activity{
 	 */
 	protected abstract void solveCondition();
 
+	/**
+	 * metoda ce returneaza ultima alarma din clasa
+	 * @return
+	 */
 	public static Alarm getAlarm() {
 		return alarm;
 	}
 
+	/**
+	 * metoda ce seteaza ultima alarma din clasa
+	 * @param newAlarm
+	 */
 	public static void setAlarm(Alarm newAlarm) {
 		alarm = newAlarm;
 	}
 	
+	/**
+	 * metoda ce seteaza valoarea variabile active cu true
+	 * @param newAlarm
+	 */
 	synchronized public static void setActive(){
 		active = true;
 	}
 	
+	/**
+	 * metoda ce seteaza valoarea variabile active cu false
+	 */
 	synchronized public static void setInActive(){
 		active = false;
 	}
 	
+	/**
+	 * metoda ce returneaza valoarea variabile active
+	 * @return
+	 */
 	public static boolean isActive(){
 		return active;
+	}
+	
+	/**
+	 * metoda ce returneaza fereastra de dialog cu sarcina
+	 * @return
+	 */
+	public Dialog getDialog(){
+		return this.dialog;
 	}
 	
 	

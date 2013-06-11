@@ -2,13 +2,11 @@ package app.tasks;
 
 import java.util.Random;
 
-import android.app.Dialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -42,7 +40,6 @@ public class LogicAlarmTask extends AlarmTask {
 	 * sa rezolvat sarcina sau da snooze
 	 */
 	protected void solveCondition() {
-		dialog = new Dialog(this);
 		dialog.setContentView(R.layout.math_test_layout);
 		dialog.setTitle("Logic Test");
 		dialog.setCancelable(false);

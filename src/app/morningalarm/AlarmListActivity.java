@@ -35,11 +35,12 @@ public class AlarmListActivity extends Activity {
 	private int lastIndex;
 	private AlarmListAdapter ad;
 	
-	/**
+	
+    @Override
+    /**
 	 * metoda atribuie listei din vedere adapterul pentru afisarea alarmelor setate
 	 * si atribuie listeneruri pentru butoane
 	 */
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -107,21 +108,23 @@ public class AlarmListActivity extends Activity {
     		findViewById(R.id.id_empty_list_text_view).setVisibility(View.VISIBLE);
     }
     
-    /**
-     * creaza meniu cu optiuni
-     */
+    
     @Override
+     /**
+      * creaza meniu cu optiuni
+      */
     public boolean onCreateOptionsMenu(Menu menu) {
     	super.onCreateOptionsMenu(menu);
         getMenuInflater().inflate(R.menu.delete_menu, menu);
         return true;
     }
     
+   
+    @Override
     /**
      * se apeleaza la alegerea unui element din meniul cu optiuni
      * si sterge toate alarmele
      */
-    @Override
     public boolean onOptionsItemSelected(MenuItem item){
     	super.onOptionsItemSelected(item);
     	switch(item.getItemId()){
@@ -135,20 +138,22 @@ public class AlarmListActivity extends Activity {
     	return true;
     }
     
+    
+    @Override
     /**
      * se apeleaza la crearea de meniu context
      */
-    @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
     	super.onCreateContextMenu(menu, v, menuInfo);
         getMenuInflater().inflate(R.menu.context_menu, menu);
     }
     
+    
+    @Override
     /**
      * se apeleaza la alegerea unui element din meniul context
      * si sterge elementul ales
      */
-    @Override
     public boolean onContextItemSelected(MenuItem item){
     	super.onContextItemSelected(item);
     	switch(item.getItemId()){
@@ -164,11 +169,12 @@ public class AlarmListActivity extends Activity {
     	return true;
     }
     
+   
+    @Override
     /**
      * se apeleaza la revenirea din preferinte
      * seteaza alarma sau actualizeaza pe una existenta
      */
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
     	super.onActivityResult(requestCode, resultCode, data);
     	SharedPreferences sp= this.getSharedPreferences(lastId, Context.MODE_PRIVATE);
@@ -196,7 +202,6 @@ public class AlarmListActivity extends Activity {
 			AlarmSetter  aSetter = new AlarmSetter(this);
 			aSetter.setAlarm(alarm);
 		}
-		
 		AlarmDbUtilities.updateAlarm(this, alarm);
 		ad.notifyDataSetChanged();
 		emptyTextViewVisibility();

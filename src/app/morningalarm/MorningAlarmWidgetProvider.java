@@ -12,9 +12,10 @@ import app.database.AlarmDbUtilities;
 
 public class MorningAlarmWidgetProvider extends AppWidgetProvider {
 
-	/**
-	 *metoda creaza activitatea AlarmListActivity atuni cind widgetul de pe ecran a fost tastat
-	 */
+/**
+* metoda creaza activitatea AlarmListActivity atuni
+* cind widgetul de pe ecran a fost tastat.
+*/
   @Override
   public void onReceive(Context context, Intent intent){
 	  if(intent.getAction()==null){
@@ -64,6 +65,9 @@ public class MorningAlarmWidgetProvider extends AppWidgetProvider {
 	}
 
 	@Override
+	/**
+	 * metoda ce face handle la serviciu
+	 */
 	protected void onHandleIntent(Intent intent) {
 		// TODO Auto-generated method stub
 		ComponentName me = new ComponentName(this,MorningAlarmWidgetProvider.class);

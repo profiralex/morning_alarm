@@ -13,7 +13,6 @@ import app.tasks.MathAlarmTask;
 import app.tasks.SimpleAlarmTask;
 
 public class AlarmService extends WakeAlarmIntentService{
-	private static long lastTime = 0;
 	public AlarmService(){
 		super("AlarmService");
 	}
@@ -26,25 +25,23 @@ public class AlarmService extends WakeAlarmIntentService{
 	 */
 	@Override
 	synchronized void doAlarmWork(Intent intent){
-		Log.d("DEBUG_TAG", "alarm got in service");
+		Log.d("DEBUG_TAG", "alarm got in alarm service " + AlarmDbUtilities.fetchAllAlarms(this).size());
 		String alarmId = intent.getExtras().getString(AlarmDbAdapter.KEY_ID);
 		AlarmSetter aSetter = new AlarmSetter(this);
 		Alarm alarm = AlarmDbUtilities.fetchAlarm(this, alarmId);
 		if(alarm != null && alarm.isEnabled() == Alarm.ALARM_ENABLED){		
-			
 			Log.d("DEBUG_TAG", alarm.getDaysOfWeek());
 			Log.d("DEBUG_TAG", alarm.getRingtone());
 			String daysOfWeek = alarm.getDaysOfWeek();
 			int today = Calendar.getInstance().get(Calendar.DAY_OF_WEEK);
 			if(!AlarmTask.isActive() && (daysOfWeek.contains("#ALL#") || daysOfWeek.contains(today+"")))
 			{
-				lastTime = alarm.getTime();
 				Intent task= new Intent(this, SimpleAlarmTask.class);
 				switch(Integer.parseInt(alarm.getWakeUpMode())){
 					case 1: 
 						task = new Intent(this, MathAlarmTask.class);
 						break;
-					case 3:
+					case 2:
 						task = new Intent(this, LogicAlarmTask.class);
 						break;
 				}
@@ -55,10 +52,14 @@ public class AlarmService extends WakeAlarmIntentService{
 				Log.d("DEBUG_TAG", "activity must start");
 			}else{
 				aSetter.setAlarm(alarm);
+				Log.d("DEBUG_TAG", "activity must start");
 			}
 		}else{
-			aSetter.removeAlarm(alarmId);
+			if(alarm!=null){
+				aSetter.removeAlarm(alarmId);
+			}
 			Log.d("DEBUG_TAG", "alarm is null");
 		}	
+		Log.d("DEBUG_TAG","exit alarm service");
 	}
 }

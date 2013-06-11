@@ -36,7 +36,7 @@ public class AlarmDbAdapter {
 			+ KEY_WAKE_UP_MODE + " text not null, "
 			+ KEY_RINGTONE + " text not null );";
 			
-	private final Context mCtx;
+	private static Context mCtx;
 	private static AlarmDbAdapter mAlarmDbAdapter;
 	
 	/**
@@ -44,7 +44,7 @@ public class AlarmDbAdapter {
 	 * metoda singleton
 	 */
 	public static AlarmDbAdapter getInstance(Context context){
-		if (mAlarmDbAdapter == null){
+		if (mAlarmDbAdapter == null || !context.equals(mCtx)){
 			mAlarmDbAdapter = new AlarmDbAdapter(context);
 		}
 		return mAlarmDbAdapter;
@@ -52,7 +52,7 @@ public class AlarmDbAdapter {
 	
 	
 	
-	public AlarmDbAdapter(Context ctx){
+	private AlarmDbAdapter(Context ctx){
 		mCtx = ctx;
 	}
 	
@@ -80,9 +80,9 @@ public class AlarmDbAdapter {
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(KEY_DESCRIPTION, DATABASE_NEW_RECORD_CODE);
 		initialValues.put(KEY_ENABLED, Alarm.ALARM_DISABLED);
-		initialValues.put(KEY_DAYS_OF_WEEK, "");
+		initialValues.put(KEY_DAYS_OF_WEEK, "#ALL#");
 		initialValues.put(KEY_TIME, 0);
-		initialValues.put(KEY_WAKE_UP_MODE, "");
+		initialValues.put(KEY_WAKE_UP_MODE, "0");
 		initialValues.put(KEY_RINGTONE, "");
 		return mDb.insert(DATABASE_TABLE, null, initialValues);
 	}

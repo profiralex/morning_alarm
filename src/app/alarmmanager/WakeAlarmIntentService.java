@@ -1,8 +1,6 @@
 package app.alarmmanager;
 
 import android.app.IntentService;
-import android.app.KeyguardManager;
-import android.app.KeyguardManager.KeyguardLock;
 import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;

@@ -1,14 +1,11 @@
 package app.tasks;
 
-import android.app.Dialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.WindowManager;
 import android.widget.Button;
-import app.morningalarm.Alarm;
 import app.morningalarm.R;
 
 public class SimpleAlarmTask extends AlarmTask {
@@ -17,10 +14,9 @@ public class SimpleAlarmTask extends AlarmTask {
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 	}
-
 	protected void solveCondition() {
 		dialog.setContentView(R.layout.simple_test_layout);
-		dialog.setTitle("Cancel Alarm or Snooze for 5 minutes");
+		dialog.setTitle("Cancel Alarm or Snooze");
 		dialog.setCancelable(false);
 		dialog.show();
 		

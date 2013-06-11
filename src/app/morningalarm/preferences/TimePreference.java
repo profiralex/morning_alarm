@@ -13,15 +13,29 @@ public class TimePreference extends DialogPreference {
 
 	TimePicker tp;
 	int xxx;
+	/**
+	 * initializeaza preferinta
+	 */
 	public void initialize(){
 		this.setPersistent(true);
 	}
 	
+	/**
+	 * constructor
+	 * @param context contextul aplicatiei
+	 * @param attrs atribute
+	 */
 	public TimePreference(Context context, AttributeSet attrs) {
 		super(context, attrs);
 		initialize();
 	}
 	
+	/**
+	 * constructor
+	 * @param context context
+	 * @param attrs atribute
+	 * @param def default
+	 */
 	public TimePreference(Context context, AttributeSet attrs, int def) {
 		super(context, attrs, def);
 		initialize();

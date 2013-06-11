@@ -35,6 +35,7 @@ public class AlarmSetter {
 	 */
 	public void refreshAllAlarms(){
 		ArrayList <Alarm> alarms = AlarmDbUtilities.fetchAllAlarms(mContext);
+		Log.d("DEBUG_TAG","REFRESHING ALARMS "+ alarms.size());
 		for(Alarm alarm: alarms){
 			setAlarm(alarm);
 		}
@@ -100,6 +101,7 @@ public class AlarmSetter {
 		Intent i = new Intent (mContext, OnAlarmReceiver.class);
 		PendingIntent pi = PendingIntent.getBroadcast(mContext,Integer.parseInt(alarmId), i, PendingIntent.FLAG_CANCEL_CURRENT);
 		mAlarmManager.cancel(pi);
+		pi.cancel();
 		Log.d("DEBUG_TAG", "alarm setted on "+ alarmId + "canceled");
 		if(AlarmDbUtilities.fetchEnabledAlarms(mContext).size() == 0){
 			MorningAlarmWidgetProvider.updateWidget(mContext,false);

@@ -22,7 +22,6 @@ public class ListPreferenceMultiSelect extends ListPreference {
 	private String checkAllKey = null;
 	private boolean[] mClickedDialogEntryIndices;
 	
-	// Constructor
 	public ListPreferenceMultiSelect(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ListPreferenceMultiSelect);
@@ -38,17 +37,25 @@ public class ListPreferenceMultiSelect extends ListPreference {
     }
 	
 	@Override
+	/**
+	 * Intializeaza elementele vectorului din care
+	 * se vor alege checkboxurile
+	 */
     public void setEntries(CharSequence[] entries) {
     	super.setEntries(entries);
-    	// Initialize the array of boolean to the same size as number of entries
         mClickedDialogEntryIndices = new boolean[entries.length];
     }
     
+	
     public ListPreferenceMultiSelect(Context context) {
         this(context, null);
     }
 
+    
     @Override
+    /**
+     * metoda ce pregateste fereastra de dialog
+     */
     protected void onPrepareDialogBuilder(Builder builder) {
     	CharSequence[] entries = getEntries();
     	CharSequence[] entryValues = getEntryValues();
@@ -69,6 +76,11 @@ public class ListPreferenceMultiSelect extends ListPreference {
         });
     }
     
+    /**
+     * metoda returneaza true daca a fost selectat elementul all
+     * @param which elementul selectat
+     * @return true daca a fost selectat elementul all
+     */
     private boolean isCheckAllValue( int which ){
     	final CharSequence[] entryValues = getEntryValues();
     	if(checkAllKey != null) {
@@ -77,6 +89,11 @@ public class ListPreferenceMultiSelect extends ListPreference {
     	return false;
     }
     
+    /**
+     * metoda ce seteaza toate elementele din lista
+     * @param dialog
+     * @param val
+     */
     private void checkAll( DialogInterface dialog, boolean val ) {
     	ListView lv = ((AlertDialog) dialog).getListView();
 		int size = lv.getCount();
@@ -86,6 +103,11 @@ public class ListPreferenceMultiSelect extends ListPreference {
 	    }
     }
 
+    /**
+     * metoda ce face parsing la valoarea preferintei si returneaza vetorul de stringuri
+     * @param val
+     * @return
+     */
     public String[] parseStoredValue(CharSequence val) {
 		if ( val==null || "".equals(val) ) {
 			return null;
@@ -95,6 +117,10 @@ public class ListPreferenceMultiSelect extends ListPreference {
 		}
     }
     
+    /**
+     * metoda ce seteaza inapoi preferintele dupa ce sa iesit din 
+     * fereastra de dialog
+     */
     private void restoreCheckedEntries() {
     	CharSequence[] entryValues = getEntryValues();
     	
@@ -137,6 +163,13 @@ public class ListPreferenceMultiSelect extends ListPreference {
         }
     }
 	
+	/**
+	 * metoda ce uneste valorile elementelor intrun singru string 
+	 * folosind un separator al clasei
+	 * @param pColl
+	 * @param separator
+	 * @return
+	 */
 	protected static String join( Iterable< ? extends Object > pColl, String separator )
     {
         Iterator< ? extends Object > oIter;
@@ -149,7 +182,7 @@ public class ListPreferenceMultiSelect extends ListPreference {
     }
 	
 	/**
-	 * 
+	 * metoda ce afla daca in preferinte se contine un element
 	 * @param straw String to be found
 	 * @param haystack Raw string that can be read direct from preferences
 	 * @param separator Separator string. If null, static default separator will be used

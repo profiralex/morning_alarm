@@ -2,8 +2,6 @@ package app.tasks;
 
 import java.util.Random;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-import app.morningalarm.Alarm;
 import app.morningalarm.R;
 
 public class MathAlarmTask extends AlarmTask {
@@ -31,7 +28,6 @@ public class MathAlarmTask extends AlarmTask {
 	 * sa rezolvat sarcina sau da snooze
 	 */
 	protected void solveCondition() {
-		dialog = new Dialog(this);
 		dialog.setContentView(R.layout.math_test_layout);
 		dialog.setTitle("Math Test");
 		dialog.setCancelable(false);

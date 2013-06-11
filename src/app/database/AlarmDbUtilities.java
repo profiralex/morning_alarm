@@ -53,9 +53,12 @@ public class AlarmDbUtilities {
 		AlarmDbAdapter mDbHelper = AlarmDbAdapter.getInstance(context);
         mDbHelper.open();
         Cursor c = mDbHelper.fetchAlarm(alarmId);
-		alarm = fetchCursor(c).get(0);
+        ArrayList<Alarm> arr = fetchCursor(c);
 		c.close();
 		mDbHelper.close();
+		if (arr.size() > 0){
+			alarm = arr.get(0);
+		}
 		return alarm;
 	}
 

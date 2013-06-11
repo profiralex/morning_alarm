@@ -8,12 +8,20 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import app.morningalarm.R;
 
+/**
+ * clasa care defineste alarma simpla
+ * @author ALEXANDR
+ *
+ */
 public class SimpleAlarmTask extends AlarmTask {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_NOSENSOR);
 	}
+	/**
+	 * metoda ce defineste cind a fost indeplinita conditia de oprire a alarmei
+	 */
 	protected void solveCondition() {
 		dialog.setContentView(R.layout.simple_test_layout);
 		dialog.setTitle("Cancel Alarm or Snooze");

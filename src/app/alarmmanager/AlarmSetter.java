@@ -18,12 +18,21 @@ import app.morningalarm.Alarm;
 import app.morningalarm.MorningAlarmWidgetProvider;
 import app.morningalarm.R;
 
+/**
+ * clasa care face management la cum sint setate alarmele 
+ * de catre AlarmManager
+ * @author ALEXANDR
+ *
+ */
 public class AlarmSetter {
 
 	private Context mContext;
 	private AlarmManager mAlarmManager;
 	private static final long FIVE_MINUTES = 300000L;
-	
+	/**
+	 * constructor
+	 * @param context
+	 */
 	public AlarmSetter(Context context){
 		mContext = context;
 		mAlarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);

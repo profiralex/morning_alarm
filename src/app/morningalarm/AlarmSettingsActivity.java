@@ -3,6 +3,12 @@ package app.morningalarm;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
+/**
+ * activitatea ce creaza ecranul cu optiubi 
+ * pentru versiuni mai mici sau egale cu 3
+ * @author ALEXANDR
+ *
+ */
 public class AlarmSettingsActivity extends PreferenceActivity {
 
 	/**

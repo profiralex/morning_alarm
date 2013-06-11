@@ -5,7 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import app.database.AlarmDbAdapter;
-
+/**
+ * clasa ce se apeleaza cind apare evenimentul 
+ * de la alarmmanager
+ * @author ALEXANDR
+ *
+ */
 public class OnAlarmReceiver extends BroadcastReceiver{
 
 	/**

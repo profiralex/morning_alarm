@@ -14,8 +14,16 @@ import android.widget.Toast;
 import app.morningalarm.Alarm;
 import app.morningalarm.R;
 
+/**
+ * clasa care defineste testul logic pentru alarma
+ * @author ALEXANDR
+ *
+ */
 public class LogicAlarmTask extends AlarmTask {
 	
+	/**
+	 * ghicitori
+	 */
 	private static String riddles[] = {
 		"It walks on four legs in the morning, two legs at noon and three legs in the evening. What is it?",
 		"At night they come without being fetched. By day they are lost without being stolen. What are they?",
@@ -23,6 +31,9 @@ public class LogicAlarmTask extends AlarmTask {
 		"What is in seasons, seconds, centuries and minutes but not in decades, years or days?"
 	};
 	
+	/**
+	 * raspunsuri la ghicitori
+	 */
 	private static String answers[] = {
 		"human","stars","name","n"
 	};
@@ -66,13 +77,5 @@ public class LogicAlarmTask extends AlarmTask {
 
 		});
 		Log.d("DEBUG_TAG", "exit solvecondition method");
-	}
-
-	public static Alarm getAlarm() {
-		return alarm;
-	}
-
-	public static void setAlarm(Alarm newAlarm) {
-		alarm = newAlarm;
 	}
 }

@@ -5,7 +5,17 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.PowerManager;
 
+/**
+ * clasa abstracta care defineste serviciu ce are face lock la 
+ * contextul aplicatie
+ * @author ALEXANDR
+ *
+ */
 public abstract class WakeAlarmIntentService extends IntentService{
+	/**
+	 * metoda abstracta in care se va specifica ce face serviciul
+	 * @param i
+	 */
 	abstract void doAlarmWork(Intent i);
 	
 	public static final String LOCK_NAME_STATIC = "app.android.morningalarm.Static";
@@ -32,6 +42,10 @@ public abstract class WakeAlarmIntentService extends IntentService{
 		return lockStatic;
 	}
 	
+	/**
+	 * constructor
+	 * @param name
+	 */
 	public WakeAlarmIntentService(String name){
 		super(name);
 	}

@@ -14,6 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import app.morningalarm.R;
 
+/**
+ * clasa care defineste alarma cu testul matematic
+ * @author ALEXANDR
+ *
+ */
 public class MathAlarmTask extends AlarmTask {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

@@ -12,7 +12,15 @@ import app.tasks.LogicAlarmTask;
 import app.tasks.MathAlarmTask;
 import app.tasks.SimpleAlarmTask;
 
+/**
+ * clasa ce se apeleaza cind apare un semnal de alarma
+ * @author ALEXANDR
+ *
+ */
 public class AlarmService extends WakeAlarmIntentService{
+	/**
+	 * constructor
+	 */
 	public AlarmService(){
 		super("AlarmService");
 	}

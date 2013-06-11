@@ -9,6 +9,12 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.TimePicker;
 
+/**
+ * clasa ce arata fereastra de dialog
+ * cu timepicker pentru selectarea orei si minutelor 
+ * @author ALEXANDR
+ *
+ */
 public class TimePreference extends DialogPreference {
 
 	TimePicker tp;

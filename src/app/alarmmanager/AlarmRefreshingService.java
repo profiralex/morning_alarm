@@ -4,7 +4,17 @@ import android.content.Intent;
 import android.util.Log;
 import app.database.AlarmDbUtilities;
 
+/**
+ * Serviciul ce apeleaza cind se 
+ * reseteaza telefonul.
+ * @author ALEXANDR
+ *
+ */
 public class AlarmRefreshingService extends WakeAlarmIntentService{
+	
+	/**
+	 * constructor
+	 */
 	public AlarmRefreshingService(){
 		super("AlarmService");
 	}

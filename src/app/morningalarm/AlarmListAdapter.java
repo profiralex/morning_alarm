@@ -17,10 +17,21 @@ import android.widget.ToggleButton;
 import app.alarmmanager.AlarmSetter;
 import app.database.AlarmDbUtilities;
 
+/**
+ * clasa adaptor care adapteaza aplicatia la interfata clasei ListView
+ * @author ALEXANDR
+ *
+ */
 public class AlarmListAdapter extends ArrayAdapter<Alarm> {
 
 	private ArrayList<Alarm> alarms;
 
+	/**
+	 * constructor
+	 * @param context
+	 * @param textViewResourceId
+	 * @param objects
+	 */
 	public AlarmListAdapter(Context context, int textViewResourceId,
 			ArrayList<Alarm> objects) {
 		super(context, textViewResourceId, objects);

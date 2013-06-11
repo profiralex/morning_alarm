@@ -8,6 +8,11 @@ import android.database.Cursor;
 import app.alarmmanager.AlarmSetter;
 import app.morningalarm.Alarm;
 
+/**
+ * clasa cu utilitati pentru aplicatie
+ * @author ALEXANDR
+ *
+ */
 public class AlarmDbUtilities {
 	
 	/**
@@ -115,6 +120,11 @@ public class AlarmDbUtilities {
         mDbHelper.close();
 	}
 	
+	/**
+	 * returneaza arrayList cu toate alarmele care sunt enabled
+	 * @param context
+	 * @return
+	 */
 	public static final ArrayList<Alarm> fetchEnabledAlarms(Context context){
 		ArrayList<Alarm> arr = new ArrayList<Alarm>();
 		AlarmDbAdapter mDbHelper = AlarmDbAdapter.getInstance(context);

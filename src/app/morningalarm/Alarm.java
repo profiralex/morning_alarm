@@ -1,5 +1,10 @@
 package app.morningalarm;
 
+/**
+ * clasa care defineste alarma
+ * @author ALEXANDR
+ *
+ */
 public class Alarm {
 	
 	public static final int 	ALARM_ENABLED = 1;
@@ -13,6 +18,16 @@ public class Alarm {
 	private String wakeUpMode;
 	private String ringtone;
 
+	/**
+	 * constructor
+	 * @param id
+	 * @param enabled
+	 * @param description
+	 * @param time
+	 * @param daysOfWeek
+	 * @param wakeUpMode
+	 * @param ringtone
+	 */
 	public Alarm(String id, int enabled, String description, long time,String daysOfWeek, String wakeUpMode, String ringtone) {
 		this.id = id;
 		this.enabled=enabled;

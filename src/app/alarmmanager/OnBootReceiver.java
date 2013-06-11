@@ -5,6 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+/**
+ * clasa ce se apeleaza cind se face reboot la dispozitiv
+ * @author ALEXANDR
+ *
+ */
 public class OnBootReceiver extends BroadcastReceiver{
 
 	public static String MSG;

@@ -17,9 +17,22 @@ import android.view.WindowManager;
 import app.alarmmanager.AlarmSetter;
 import app.morningalarm.Alarm;
 
+/**
+ * clasa abstracta care defineste activity care 
+ * arata un dialog cu sarcina si in acelasi timp 
+ * face play la ton de alarma si activeaza vibratia dispozitivului
+ * @author ALEXANDR
+ *
+ */
 public abstract class AlarmTask extends Activity{
 
+	/**
+	 * alarma
+	 */
 	protected static Alarm alarm;
+	/**
+	 * variabila ce defineste daca alarma este actva
+	 */
 	protected static boolean active;
 	protected Ringtone ringtone;
 	protected Vibrator vibrator;

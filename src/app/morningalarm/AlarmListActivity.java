@@ -28,6 +28,12 @@ import app.alarmmanager.AlarmSetter;
 import app.database.AlarmDbAdapter;
 import app.database.AlarmDbUtilities;
 
+/**
+ * activitatea principala a aplicatiei
+ * care afiseaza lista cu alarme si optiunile lor
+ * @author ALEXANDR
+ *
+ */
 public class AlarmListActivity extends Activity {
 	
 	private ArrayList<Alarm> alarmList;

@@ -10,6 +10,11 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import app.database.AlarmDbUtilities;
 
+/**
+ * widget pentru ecran ce afiseaza starea alarmelor
+ * @author ALEXANDR
+ *
+ */
 public class MorningAlarmWidgetProvider extends AppWidgetProvider {
 
 /**
@@ -60,6 +65,9 @@ public class MorningAlarmWidgetProvider extends AppWidgetProvider {
    */
   public static class ToggleService extends IntentService{
 
+	/**
+	 * serviciu ce se activeaza la startul widgetului
+	 */
 	public ToggleService() {
 		super("MorningAlarmWidgetProvider$ToggleService");
 	}

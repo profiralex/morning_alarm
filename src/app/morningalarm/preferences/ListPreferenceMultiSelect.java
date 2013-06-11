@@ -16,12 +16,23 @@ import android.widget.ListView;
 import app.morningalarm.R;
 import app.morningalarm.R.styleable;
 
+/**
+ * clasa care definesc lista de preferinte cu checkboxuri
+ * in care se pot selecta mai mult de un singur element
+ * @author ALEXANDR
+ *
+ */
 public class ListPreferenceMultiSelect extends ListPreference {
 	private String separator;
 	private static final String DEFAULT_SEPARATOR = "OV=I=XseparatorX=I=VO"; 
 	private String checkAllKey = null;
 	private boolean[] mClickedDialogEntryIndices;
 	
+	/**
+	 * constructorul clasei
+	 * @param context
+	 * @param attrs
+	 */
 	public ListPreferenceMultiSelect(Context context, AttributeSet attrs) {
         super(context, attrs);
         TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.ListPreferenceMultiSelect);
@@ -46,7 +57,10 @@ public class ListPreferenceMultiSelect extends ListPreference {
         mClickedDialogEntryIndices = new boolean[entries.length];
     }
     
-	
+	/**
+	 * constructorul clasei
+	 * @param context
+	 */
     public ListPreferenceMultiSelect(Context context) {
         this(context, null);
     }

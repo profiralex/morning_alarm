@@ -8,6 +8,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import app.morningalarm.Alarm;
 
+/**
+ * clasa care este adaptor intre interfata bazei de date 
+ * si restul aplicatiei
+ * @author ALEXANDR
+ *
+ */
 public class AlarmDbAdapter {
 
 	public static final String DATABASE_NAME = "data";
@@ -52,6 +58,10 @@ public class AlarmDbAdapter {
 	
 	
 	
+	/**
+	 * constructor
+	 * @param ctx
+	 */
 	private AlarmDbAdapter(Context ctx){
 		mCtx = ctx;
 	}
@@ -170,6 +180,10 @@ public class AlarmDbAdapter {
 	 */
 	private static class DatabaseHelper extends SQLiteOpenHelper{
 		
+		/**
+		 * constructor
+		 * @param context
+		 */
 		DatabaseHelper(Context context){
 			super(context,DATABASE_NAME,null,DATABASE_VERSION);
 		}
